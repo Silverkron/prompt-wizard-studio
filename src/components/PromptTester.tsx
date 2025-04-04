@@ -21,9 +21,14 @@ import {
 import { MessageRow } from "@/components/MessageRow";
 import { HistoryList } from "@/components/HistoryList";
 import { Copy, Plus, Send, Trash } from "lucide-react";
+import { OpenAITutorial } from "@/components/OpenAITutorial";
+import LanguageSelector from "@/components/LanguageSelector";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { getTranslation } from "@/lib/translations";
 
 export const PromptTester: React.FC = () => {
   const { toast } = useToast();
+  const { language } = useLanguage();
   const [apiToken, setApiToken] = useState("");
   const [model, setModel] = useState("gpt-4o-mini");
   const [maxTokens, setMaxTokens] = useState(800);
@@ -78,7 +83,7 @@ export const PromptTester: React.FC = () => {
       setMessages(newMessages);
     } else {
       toast({
-        title: "Errore",
+        title: getTranslation(language, "error"),
         description: "È necessario almeno un messaggio",
         variant: "destructive",
       });
@@ -88,7 +93,7 @@ export const PromptTester: React.FC = () => {
   const handleSubmit = async () => {
     if (!apiToken) {
       toast({
-        title: "Errore",
+        title: getTranslation(language, "error"),
         description: "È necessario inserire un token API OpenAI",
         variant: "destructive",
       });
@@ -99,7 +104,7 @@ export const PromptTester: React.FC = () => {
     const invalidMessages = messages.some(message => !message.content);
     if (invalidMessages) {
       toast({
-        title: "Errore",
+        title: getTranslation(language, "error"),
         description: "Tutti i messaggi devono avere un contenuto",
         variant: "destructive",
       });
@@ -135,7 +140,7 @@ export const PromptTester: React.FC = () => {
       setHistory([historyItem, ...history]);
       
       toast({
-        title: "Successo",
+        title: getTranslation(language, "success"),
         description: "Prompt inviato con successo",
       });
     } catch (error) {
@@ -156,7 +161,7 @@ export const PromptTester: React.FC = () => {
       setHistory([historyItem, ...history]);
       
       toast({
-        title: "Errore",
+        title: getTranslation(language, "error"),
         description: errorMessage,
         variant: "destructive",
       });
@@ -180,14 +185,14 @@ export const PromptTester: React.FC = () => {
     navigator.clipboard.writeText(jsonString)
       .then(() => {
         toast({
-          title: "Configurazione copiata",
+          title: getTranslation(language, "success"),
           description: "La configurazione è stata copiata negli appunti",
         });
       })
       .catch(err => {
         console.error("Failed to copy:", err);
         toast({
-          title: "Errore",
+          title: getTranslation(language, "error"),
           description: "Impossibile copiare negli appunti",
           variant: "destructive",
         });
@@ -212,13 +217,13 @@ export const PromptTester: React.FC = () => {
       setMessages(config.messages);
 
       toast({
-        title: "Importazione riuscita",
+        title: getTranslation(language, "success"),
         description: "La configurazione è stata importata correttamente",
       });
     } catch (error) {
       console.error("Error importing config:", error);
       toast({
-        title: "Errore di importazione",
+        title: getTranslation(language, "error"),
         description: "Impossibile analizzare la configurazione JSON",
         variant: "destructive",
       });
@@ -244,9 +249,9 @@ export const PromptTester: React.FC = () => {
       <Card className="mb-6">
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
-            <span>Tester di Prompt per OpenAI</span>
+            <span>{getTranslation(language, "appTitle")}</span>
             <div className="flex items-center gap-2">
-              <Label htmlFor="openai-token" className="mr-2">Token API OpenAI</Label>
+              <Label htmlFor="openai-token" className="mr-2">{getTranslation(language, "apiToken")}</Label>
               <Input
                 id="openai-token"
                 type="password"
@@ -255,29 +260,32 @@ export const PromptTester: React.FC = () => {
                 placeholder="sk-..."
                 className="w-64"
               />
+              <LanguageSelector />
             </div>
           </CardTitle>
         </CardHeader>
       </Card>
 
+      <OpenAITutorial />
+
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="mb-4">
-          <TabsTrigger value="editor">Editor</TabsTrigger>
-          <TabsTrigger value="history">Storico</TabsTrigger>
+          <TabsTrigger value="editor">{getTranslation(language, "editor")}</TabsTrigger>
+          <TabsTrigger value="history">{getTranslation(language, "history")}</TabsTrigger>
         </TabsList>
         
         <TabsContent value="editor" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Configurazione</CardTitle>
+              <CardTitle>{getTranslation(language, "configuration")}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-3 gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="model">Modello</Label>
+                  <Label htmlFor="model">{getTranslation(language, "model")}</Label>
                   <Select value={model} onValueChange={setModel}>
                     <SelectTrigger id="model">
-                      <SelectValue placeholder="Seleziona un modello" />
+                      <SelectValue placeholder={getTranslation(language, "model")} />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="gpt-4o-mini">gpt-4o-mini</SelectItem>
@@ -288,7 +296,7 @@ export const PromptTester: React.FC = () => {
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="max-tokens">Max Tokens: {maxTokens}</Label>
+                  <Label htmlFor="max-tokens">{getTranslation(language, "maxTokens")}: {maxTokens}</Label>
                   <Slider
                     id="max-tokens"
                     min={1}
@@ -300,7 +308,7 @@ export const PromptTester: React.FC = () => {
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="temperature">Temperatura: {temperature.toFixed(1)}</Label>
+                  <Label htmlFor="temperature">{getTranslation(language, "temperature")}: {temperature.toFixed(1)}</Label>
                   <Slider
                     id="temperature"
                     min={0}
@@ -317,14 +325,14 @@ export const PromptTester: React.FC = () => {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
-                <span>Messaggi</span>
+                <span>{getTranslation(language, "messages")}</span>
                 <div className="flex gap-2">
                   <Button variant="outline" size="sm" onClick={importConfig}>
-                    Importa
+                    {getTranslation(language, "import")}
                   </Button>
                   <Button variant="outline" size="sm" onClick={exportConfig}>
                     <Copy className="h-4 w-4 mr-2" />
-                    Esporta
+                    {getTranslation(language, "export")}
                   </Button>
                 </div>
               </CardTitle>
@@ -342,7 +350,7 @@ export const PromptTester: React.FC = () => {
               
               <Button variant="outline" onClick={addMessage} className="w-full">
                 <Plus className="h-4 w-4 mr-2" />
-                Aggiungi Messaggio
+                {getTranslation(language, "addMessage")}
               </Button>
             </CardContent>
             <CardFooter>
@@ -354,12 +362,12 @@ export const PromptTester: React.FC = () => {
                 {loading ? (
                   <div className="flex items-center">
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                    Elaborazione...
+                    {getTranslation(language, "processing")}
                   </div>
                 ) : (
                   <>
                     <Send className="h-4 w-4 mr-2" />
-                    Invia
+                    {getTranslation(language, "send")}
                   </>
                 )}
               </Button>
@@ -370,14 +378,14 @@ export const PromptTester: React.FC = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
-                  <span>Risposta</span>
+                  <span>{getTranslation(language, "response")}</span>
                   <Button 
                     variant="outline" 
                     size="sm" 
                     onClick={() => navigator.clipboard.writeText(response)}
                   >
                     <Copy className="h-4 w-4 mr-2" />
-                    Copia
+                    {getTranslation(language, "copy")}
                   </Button>
                 </CardTitle>
               </CardHeader>

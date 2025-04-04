@@ -1,73 +1,92 @@
-# Welcome to your Lovable project
+# Prompt Wizard Studio
 
-## Project info
+A modern web application for testing, refining, and experimenting with OpenAI language models. Perfect for prompt engineers, developers, and AI enthusiasts.
 
-**URL**: https://lovable.dev/projects/db8184a8-94fe-4d2b-9c88-08c0bb0779fc
+## Features
 
-## How can I edit this code?
+- **Interactive Prompt Testing**: Design, send, and analyze responses from OpenAI's language models
+- **Parameter Control**: Fine-tune model settings including temperature, max tokens, and model selection
+- **History Management**: Save and reload previous prompt configurations
+- **Multi-language Support**: Interface available in English, Italian, French, Spanish, and German
+- **Import/Export**: Share your prompt configurations with others
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use Lovable**
+- React 18 with TypeScript
+- Vite for fast development and production builds
+- Tailwind CSS for styling
+- shadcn/ui component library
+- React Router for navigation
+- React Query for data fetching
+- OpenAI API integration
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/db8184a8-94fe-4d2b-9c88-08c0bb0779fc) and start prompting.
+## Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
 
-**Use your preferred IDE**
+- Node.js (latest LTS version recommended)
+- OpenAI API key
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Installation
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+```bash
+# Clone the repository
+git clone https://github.com/Silverkron/prompt-wizard-studio.git
+cd prompt-wizard-studio
 
-Follow these steps:
+# Install dependencies
+npm install
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Your application will be available at `http://localhost:5173/`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Configuration
 
-**Use GitHub Codespaces**
+To use the OpenAI integration features, you'll need to provide your API key through the application interface. Follow the instructions in the OpenAI tutorial section for detailed guidance.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Usage
 
-## What technologies are used for this project?
+1. Select your preferred language from the language selector
+2. Configure your OpenAI model parameters
+3. Create system, user, and assistant messages
+4. Send your prompt and view the model's response
+5. Save interesting prompts for later use
 
-This project is built with:
+## Development
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+```bash
+# Run development server with hot reloading
+npm run dev
 
-## How can I deploy this project?
+# Build for production
+npm run build
 
-Simply open [Lovable](https://lovable.dev/projects/db8184a8-94fe-4d2b-9c88-08c0bb0779fc) and click on Share -> Publish.
+# Preview production build
+npm run preview
 
-## Can I connect a custom domain to my Lovable project?
+# Run linting
+npm run lint
+```
 
-Yes it is!
+## Contributing
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgements
+
+- [OpenAI](https://openai.com/) for their powerful language models
+- [shadcn/ui](https://ui.shadcn.com/) for the beautiful component library
+- [Vite](https://vitejs.dev/) for the blazing fast build tool

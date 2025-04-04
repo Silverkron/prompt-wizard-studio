@@ -16,7 +16,8 @@ import {
   getModel, saveModel, 
   getMaxTokens, saveMaxTokens, 
   getTemperature, saveTemperature,
-  addToHistory, getPromptHistory
+  addToHistory, getPromptHistory,
+  saveCurrentMessages, getCurrentMessages
 } from "@/lib/storage";
 import { MessageRow } from "@/components/MessageRow";
 import { HistoryList } from "@/components/HistoryList";
@@ -48,6 +49,9 @@ export const PromptTester: React.FC = () => {
     setMaxTokens(getMaxTokens());
     setTemperature(getTemperature());
     setHistory(getPromptHistory());
+    
+    // Load messages from session storage
+    setMessages(getCurrentMessages());
   }, []);
 
   // Save values to localStorage when they change
@@ -66,6 +70,11 @@ export const PromptTester: React.FC = () => {
   useEffect(() => {
     saveTemperature(temperature);
   }, [temperature]);
+
+  // Save messages to session storage when they change
+  useEffect(() => {
+    saveCurrentMessages(messages);
+  }, [messages]);
 
   const addMessage = () => {
     setMessages([...messages, { role: "user", content: "" }]);

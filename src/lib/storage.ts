@@ -1,12 +1,13 @@
 
-import { HistoryItem, PromptConfig } from "@/types/openai";
+import { HistoryItem, Message, PromptConfig } from "@/types/openai";
 
 const STORAGE_KEYS = {
   OPENAI_TOKEN: "openai-token",
   MODEL: "openai-model",
   MAX_TOKENS: "openai-max-tokens",
   TEMPERATURE: "openai-temperature",
-  HISTORY: "openai-history"
+  HISTORY: "openai-history",
+  CURRENT_MESSAGES: "openai-current-messages"
 };
 
 export const saveOpenAIToken = (token: string): void => {
@@ -58,4 +59,14 @@ export const addToHistory = (item: HistoryItem): void => {
 
 export const clearHistory = (): void => {
   localStorage.removeItem(STORAGE_KEYS.HISTORY);
+};
+
+// New functions for session storage
+export const saveCurrentMessages = (messages: Message[]): void => {
+  sessionStorage.setItem(STORAGE_KEYS.CURRENT_MESSAGES, JSON.stringify(messages));
+};
+
+export const getCurrentMessages = (): Message[] => {
+  const messages = sessionStorage.getItem(STORAGE_KEYS.CURRENT_MESSAGES);
+  return messages ? JSON.parse(messages) : [{ role: "user", content: "" }];
 };

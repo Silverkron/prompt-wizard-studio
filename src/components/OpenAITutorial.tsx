@@ -17,7 +17,7 @@ export const OpenAITutorial: React.FC = () => {
   return (
     <Card className="mb-6">
       <CardHeader className="pb-3 cursor-pointer" onClick={toggleTutorial}>
-        <CardTitle className="flex items-center justify-between">
+        <CardTitle className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
             <span>{getTranslation(language, "tutorialTitle")}</span>
             <Badge variant="outline" className="bg-green-50 text-green-600 hover:bg-green-100 border-green-200">
@@ -27,6 +27,7 @@ export const OpenAITutorial: React.FC = () => {
           {isOpen ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
         </CardTitle>
       </CardHeader>
+
       {isOpen && (
         <CardContent className="pt-0">
           <ol className="list-decimal pl-6 space-y-4">
@@ -74,9 +75,6 @@ export const OpenAITutorial: React.FC = () => {
               >
                 {getTranslation(language, "tutorialStep5Tool")}
               </a>.
-            </li>
-            <li>
-              <span className="font-medium">{getTranslation(language, "tutorialStep6")}</span>
             </li>
           </ol>
         </CardContent>

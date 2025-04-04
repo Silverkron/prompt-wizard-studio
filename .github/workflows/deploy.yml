@@ -32,7 +32,7 @@ jobs:
         run: npm ci
         
       - name: Build
-        run: VITE_BASE_URL=https://prompt-tester.lucasciacca.com npm run build
+        run: npm run build -- --base=https://prompt-tester.lucasciacca.com
         
       - name: Setup Pages
         uses: actions/configure-pages@v4

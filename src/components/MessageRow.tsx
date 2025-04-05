@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import {Card} from "@/components/ui/card";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {Textarea} from "@/components/ui/textarea";
@@ -17,23 +18,37 @@ interface MessageRowProps {
 }
 
 export const MessageRow: React.FC<MessageRowProps> = ({
-                                                          message,
-                                                          onChange,
-                                                          onRemove,
-                                                          showRemoveButton
-                                                      }) => {
-    const [includeImage, setIncludeImage] = useState<boolean>(
-        Array.isArray(message.content) && 
-        message.content.some(item => typeof item === 'object' && 'type' in item && item.type === 'image_url')
-    );
-    const [imageUrl, setImageUrl] = useState<string>(
-        Array.isArray(message.content) 
-            ? (message.content.find(item => 
-                typeof item === 'object' && 'type' in item && item.type === 'image_url'
-              ) as ImageMessageContent)?.image_url?.url || '' 
-            : ''
-    );
-    const [textContent, setTextContent] = useState<string>(getEditableContent());
+    message,
+    onChange,
+    onRemove,
+    showRemoveButton
+}) => {
+    const [includeImage, setIncludeImage] = useState<boolean>(false);
+    const [imageUrl, setImageUrl] = useState<string>("");
+    const [textContent, setTextContent] = useState<string>("");
+
+    // Initialize state based on message content
+    useEffect(() => {
+        if (typeof message.content === "string") {
+            setTextContent(message.content);
+            setIncludeImage(false);
+            setImageUrl("");
+        } else if (Array.isArray(message.content)) {
+            // Find text content
+            const textItem = message.content.find(item => 
+                typeof item === "object" && "type" in item && item.type === "text"
+            ) as MessageContent | undefined;
+            
+            // Find image content
+            const imageItem = message.content.find(item => 
+                typeof item === "object" && "type" in item && item.type === "image_url"
+            ) as ImageMessageContent | undefined;
+            
+            setTextContent(textItem?.text || "");
+            setIncludeImage(!!imageItem);
+            setImageUrl(imageItem?.image_url?.url || "");
+        }
+    }, [message.content]);
 
     const handleRoleChange = (role: MessageRole) => {
         onChange({...message, role});
@@ -41,23 +56,23 @@ export const MessageRow: React.FC<MessageRowProps> = ({
 
     const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setTextContent(e.target.value);
-        updateMessageContent(e.target.value, imageUrl);
+        updateMessageContent(e.target.value, imageUrl, includeImage);
     };
 
     const handleImageToggle = (checked: boolean) => {
         setIncludeImage(checked);
-        updateMessageContent(textContent, checked ? imageUrl : "");
+        updateMessageContent(textContent, imageUrl, checked);
     };
 
     const handleImageUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setImageUrl(e.target.value);
-        updateMessageContent(textContent, e.target.value);
+        updateMessageContent(textContent, e.target.value, includeImage);
     };
 
-    function updateMessageContent(text: string, imgUrl: string) {
+    function updateMessageContent(text: string, imgUrl: string, includeImg: boolean) {
         let newContent: Content | Content[];
         
-        if (includeImage && imgUrl) {
+        if (includeImg && imgUrl) {
             const contentArray: Content[] = [
                 { type: "text", text },
                 { type: "image_url", image_url: { url: imgUrl } }
@@ -69,36 +84,6 @@ export const MessageRow: React.FC<MessageRowProps> = ({
         
         onChange({...message, content: newContent});
     }
-
-    function getEditableContent(): string {
-        if (typeof message.content === "string") {
-            return message.content;
-        }
-
-        if (Array.isArray(message.content)) {
-            return message.content
-                .filter(item => typeof item === 'object' && 'type' in item && item.type === 'text')
-                .map(item => {
-                    if (typeof item === "string") {
-                        return item;
-                    }
-                    if (item.type === "text") {
-                        return item.text;
-                    }
-                    return "";
-                })
-                .join("\n");
-        }
-
-        if (typeof message.content === "object") {
-            if ("text" in message.content) {
-                return message.content.text;
-            }
-            return "";
-        }
-
-        return "";
-    };
 
     return (
         <Card className="p-4">

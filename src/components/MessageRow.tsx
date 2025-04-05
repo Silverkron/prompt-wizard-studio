@@ -51,28 +51,35 @@ export const MessageRow: React.FC<MessageRowProps> = ({
     }, [message.content]);
 
     const handleRoleChange = (role: MessageRole) => {
-        onChange({...message, role});
+        // If changing from user to another role, remove any image content
+        if (message.role === "user" && role !== "user") {
+            setIncludeImage(false);
+            setImageUrl("");
+            onChange({...message, role, content: textContent});
+        } else {
+            onChange({...message, role});
+        }
     };
 
     const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setTextContent(e.target.value);
-        updateMessageContent(e.target.value, imageUrl, includeImage);
+        updateMessageContent(e.target.value, imageUrl, includeImage && message.role === "user");
     };
 
     const handleImageToggle = (checked: boolean) => {
         setIncludeImage(checked);
-        updateMessageContent(textContent, imageUrl, checked);
+        updateMessageContent(textContent, imageUrl, checked && message.role === "user");
     };
 
     const handleImageUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setImageUrl(e.target.value);
-        updateMessageContent(textContent, e.target.value, includeImage);
+        updateMessageContent(textContent, e.target.value, includeImage && message.role === "user");
     };
 
     function updateMessageContent(text: string, imgUrl: string, includeImg: boolean) {
         let newContent: Content | Content[];
         
-        if (includeImg && imgUrl) {
+        if (includeImg && imgUrl && message.role === "user") {
             const contentArray: Content[] = [
                 { type: "text", text },
                 { type: "image_url", image_url: { url: imgUrl } }
@@ -121,30 +128,32 @@ export const MessageRow: React.FC<MessageRowProps> = ({
                     )}
                 </div>
                 
-                <div className="flex items-center gap-4">
-                    <div className="flex items-center space-x-2">
-                        <Switch 
-                            id={`add-image-${message.role}`} 
-                            checked={includeImage}
-                            onCheckedChange={handleImageToggle}
-                        />
-                        <Label htmlFor={`add-image-${message.role}`} className="flex items-center">
-                            <ImageIcon className="h-4 w-4 mr-2" />
-                            Add image URL
-                        </Label>
-                    </div>
-                    
-                    {includeImage && (
-                        <div className="flex-1">
-                            <Input
-                                value={imageUrl}
-                                onChange={handleImageUrlChange}
-                                placeholder="https://example.com/image.jpg"
-                                className="w-full"
+                {message.role === "user" && (
+                    <div className="flex items-center gap-4">
+                        <div className="flex items-center space-x-2">
+                            <Switch 
+                                id={`add-image-${message.role}`} 
+                                checked={includeImage}
+                                onCheckedChange={handleImageToggle}
                             />
+                            <Label htmlFor={`add-image-${message.role}`} className="flex items-center">
+                                <ImageIcon className="h-4 w-4 mr-2" />
+                                Add image URL
+                            </Label>
                         </div>
-                    )}
-                </div>
+                        
+                        {includeImage && (
+                            <div className="flex-1">
+                                <Input
+                                    value={imageUrl}
+                                    onChange={handleImageUrlChange}
+                                    placeholder="https://example.com/image.jpg"
+                                    className="w-full"
+                                />
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
         </Card>
     );

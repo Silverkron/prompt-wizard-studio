@@ -49,7 +49,6 @@ export const PromptTester: React.FC = () => {
     const [isConfigOpen, setIsConfigOpen] = useState(false);
     const [isTutorialOpen, setIsTutorialOpen] = useState(true);
 
-    // Load saved values from localStorage on component mount
     useEffect(() => {
         setApiToken(getOpenAIToken());
         setModel(getModel());
@@ -57,11 +56,9 @@ export const PromptTester: React.FC = () => {
         setTemperature(getTemperature());
         setHistory(getPromptHistory());
 
-        // Load messages from session storage
         setMessages(getCurrentMessages());
     }, []);
 
-    // Save values to localStorage when they change
     useEffect(() => {
         saveOpenAIToken(apiToken);
     }, [apiToken]);
@@ -78,7 +75,6 @@ export const PromptTester: React.FC = () => {
         saveTemperature(temperature);
     }, [temperature]);
 
-    // Save messages to session storage when they change
     useEffect(() => {
         saveCurrentMessages(messages);
     }, [messages]);
@@ -116,7 +112,6 @@ export const PromptTester: React.FC = () => {
             return;
         }
 
-        // Validate messages
         const invalidMessages = messages.some(message => !message.content);
         if (invalidMessages) {
             toast({
@@ -144,7 +139,6 @@ export const PromptTester: React.FC = () => {
             const responseText = result.choices[0]?.message?.content || "Nessuna risposta";
             setResponse(responseText);
 
-            // Add to history
             const historyItem: HistoryItem = {
                 id: Date.now().toString(),
                 timestamp: Date.now(),
@@ -165,7 +159,6 @@ export const PromptTester: React.FC = () => {
             const errorMessage = error instanceof Error ? error.message : "Errore sconosciuto";
             setResponse(`Errore: ${errorMessage}`);
 
-            // Add error to history too
             const historyItem: HistoryItem = {
                 id: Date.now().toString(),
                 timestamp: Date.now(),
@@ -197,7 +190,6 @@ export const PromptTester: React.FC = () => {
 
         const jsonString = JSON.stringify(promptConfig, null, 2);
 
-        // Copy to clipboard
         navigator.clipboard.writeText(jsonString)
             .then(() => {
                 toast({
@@ -222,7 +214,6 @@ export const PromptTester: React.FC = () => {
 
             const config: PromptConfig = JSON.parse(input);
 
-            // Validate the imported config
             if (!config.model || !Array.isArray(config.messages)) {
                 throw new Error("Formato di configurazione non valido");
             }
@@ -260,7 +251,6 @@ export const PromptTester: React.FC = () => {
         }
     };
 
-    // Mobile Configuration Collapsible component
     const MobileConfigurationCollapsible = () => (
         <Collapsible
             open={isConfigOpen}
@@ -332,7 +322,6 @@ export const PromptTester: React.FC = () => {
         </Collapsible>
     );
 
-    // Collapsible tutorial for both mobile and desktop
     const TutorialCollapsible = () => (
         <Collapsible
             open={isTutorialOpen}
@@ -340,7 +329,7 @@ export const PromptTester: React.FC = () => {
             className="w-full mb-6 border rounded-lg bg-white shadow-sm"
         >
             <div className="flex items-center justify-between px-4 py-3 border-b">
-                <h3 className="text-sm font-medium">{getTranslation(language, "openaiApiTutorial")}</h3>
+                <h3 className="text-sm font-medium">{getTranslation(language, "tutorialTitle")}</h3>
                 <CollapsibleTrigger asChild>
                     <Button variant="ghost" size="sm" className="p-0 h-7 w-7">
                         <ChevronDown className={`h-4 w-4 transition-transform ${isTutorialOpen ? 'transform rotate-180' : ''}`} />
@@ -348,31 +337,7 @@ export const PromptTester: React.FC = () => {
                 </CollapsibleTrigger>
             </div>
             <CollapsibleContent className="px-4 py-3">
-                {!isMobile && (
-                    <div className="space-y-4">
-                        <p className="text-sm text-gray-600">{getTranslation(language, "openaiApiTutorialSubtitle")}</p>
-                        <p>{getTranslation(language, "openaiApiTutorialText")}</p>
-                        <div className="flex justify-start">
-                            <Button variant="outline" onClick={() => window.open("https://platform.openai.com/api-keys", "_blank")}>
-                                <ExternalLink className="h-4 w-4 mr-2" />
-                                {getTranslation(language, "getApiKey")}
-                            </Button>
-                        </div>
-                    </div>
-                )}
-                {isMobile && (
-                    <div className="space-y-2">
-                        <p className="text-sm">
-                            {getTranslation(language, "openaiApiTutorialText")}
-                        </p>
-                        <div className="flex justify-start">
-                            <Button variant="outline" size="sm" onClick={() => window.open("https://platform.openai.com/api-keys", "_blank")}>
-                                <ExternalLink className="h-4 w-4 mr-2" />
-                                {getTranslation(language, "getApiKey")}
-                            </Button>
-                        </div>
-                    </div>
-                )}
+                <OpenAITutorial />
             </CollapsibleContent>
         </Collapsible>
     );

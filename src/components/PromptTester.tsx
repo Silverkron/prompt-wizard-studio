@@ -47,7 +47,7 @@ export const PromptTester: React.FC = () => {
     const [activeTab, setActiveTab] = useState("editor");
     const isMobile = useIsMobile();
     const [isConfigOpen, setIsConfigOpen] = useState(false);
-    const [isTutorialOpen, setIsTutorialOpen] = useState(true);
+    const [isTutorialOpen, setIsTutorialOpen] = useState(false);
 
     useEffect(() => {
         setApiToken(getOpenAIToken());

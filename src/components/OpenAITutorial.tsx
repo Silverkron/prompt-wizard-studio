@@ -1,8 +1,6 @@
 
 import React from "react";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ExternalLink } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getTranslation } from "@/lib/translations";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -62,12 +60,6 @@ export const OpenAITutorial: React.FC = () => {
             {getTranslation(language, "tutorialStep5")}
           </p>
         </CardContent>
-        <CardFooter>
-          <Button variant="outline" size="sm" className="w-full" onClick={() => window.open("https://platform.openai.com/api-keys", "_blank")}>
-            <ExternalLink className="h-4 w-4 mr-2" />
-            {getTranslation(language, "getApiKey")}
-          </Button>
-        </CardFooter>
       </Card>
     );
   }
@@ -125,12 +117,6 @@ export const OpenAITutorial: React.FC = () => {
           {getTranslation(language, "tutorialStep5")}
         </p>
       </CardContent>
-      <CardFooter>
-        <Button variant="outline" onClick={() => window.open("https://platform.openai.com/api-keys", "_blank")}>
-          <ExternalLink className="h-4 w-4 mr-2" />
-          {getTranslation(language, "getApiKey")}
-        </Button>
-      </CardFooter>
     </Card>
   );
 };

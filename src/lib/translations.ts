@@ -32,7 +32,11 @@ export type TranslationKey =
     | "tutorialStep4Link"
     | "tutorialStep5"
     | "tutorialStep5Tool"
-    | "languageSelector";
+    | "languageSelector"
+    | "openaiApiTutorial"
+    | "openaiApiTutorialText"
+    | "openaiApiTutorialSubtitle"
+    | "getApiKey";
 
 export const translations: Record<Language, Record<TranslationKey, string>> = {
     it: {
@@ -67,7 +71,11 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         tutorialStep4Link: "sezione di fatturazione",
         tutorialStep5: "Ci siamo! Incolla qui la tua secret key e attiverai l'AI Assistant. Ricordati di custodire sempre la tua chiave in un posto sicuro",
         tutorialStep5Tool: "lo strumento di monitoraggio",
-        languageSelector: "Lingua"
+        languageSelector: "Lingua",
+        openaiApiTutorial: "Tutorial API OpenAI",
+        openaiApiTutorialText: "Per utilizzare questo strumento, avrai bisogno di una chiave API OpenAI. Segui il link qui sotto per ottenerla.",
+        openaiApiTutorialSubtitle: "Come ottenere e utilizzare la tua chiave API",
+        getApiKey: "Ottieni la tua chiave API"
     },
     en: {
         appTitle: "OpenAI Prompt Tester",
@@ -101,7 +109,11 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         tutorialStep4Link: "billing section",
         tutorialStep5: "We're done! Paste your secret key here and you'll activate the AI Assistant. Remember to always keep your key in a safe place",
         tutorialStep5Tool: "the monitoring tool",
-        languageSelector: "Language"
+        languageSelector: "Language",
+        openaiApiTutorial: "OpenAI API Tutorial",
+        openaiApiTutorialText: "To use this tool, you'll need an OpenAI API key. Follow the link below to get one.",
+        openaiApiTutorialSubtitle: "How to get and use your API key",
+        getApiKey: "Get your API key"
     },
     fr: {
         appTitle: "Testeur de Prompt pour OpenAI",
@@ -135,7 +147,11 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         tutorialStep4Link: "section facturation",
         tutorialStep5: "C'est fait! Collez votre clé secrète ici et vous activerez l'Assistant IA. N'oubliez pas de toujours garder votre clé dans un endroit sûr",
         tutorialStep5Tool: "l'outil de surveillance",
-        languageSelector: "Langue"
+        languageSelector: "Langue",
+        openaiApiTutorial: "Tutoriel API OpenAI",
+        openaiApiTutorialText: "Pour utiliser cet outil, vous aurez besoin d'une clé API OpenAI. Suivez le lien ci-dessous pour en obtenir une.",
+        openaiApiTutorialSubtitle: "Comment obtenir et utiliser votre clé API",
+        getApiKey: "Obtenez votre clé API"
     },
     es: {
         appTitle: "Comprobador de Prompt para OpenAI",
@@ -169,7 +185,11 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         tutorialStep4Link: "sección de facturación",
         tutorialStep5: "¡Listo! Pega tu clave secreta aquí y activarás el Asistente IA. Recuerda siempre mantener tu clave en un lugar seguro",
         tutorialStep5Tool: "la herramienta de monitoreo",
-        languageSelector: "Idioma"
+        languageSelector: "Idioma",
+        openaiApiTutorial: "Tutorial de API OpenAI",
+        openaiApiTutorialText: "Para usar esta herramienta, necesitarás una clave API de OpenAI. Sigue el enlace de abajo para obtener una.",
+        openaiApiTutorialSubtitle: "Cómo obtener y usar tu clave API",
+        getApiKey: "Obtén tu clave API"
     },
     de: {
         appTitle: "OpenAI Prompt-Tester",
@@ -203,7 +223,11 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         tutorialStep4Link: "Abrechnungsbereich",
         tutorialStep5: "Wir sind fertig! Fügen Sie Ihren geheimen Schlüssel hier ein und Sie aktivieren den KI-Assistenten. Denken Sie daran, Ihren Schlüssel immer an einem sicheren Ort aufzubewahren",
         tutorialStep5Tool: "das Überwachungstool",
-        languageSelector: "Sprache"
+        languageSelector: "Sprache",
+        openaiApiTutorial: "OpenAI API Tutorial",
+        openaiApiTutorialText: "Um dieses Tool zu verwenden, benötigen Sie einen OpenAI API-Schlüssel. Folgen Sie dem Link unten, um einen zu erhalten.",
+        openaiApiTutorialSubtitle: "Wie Sie Ihren API-Schlüssel erhalten und verwenden",
+        getApiKey: "Holen Sie sich Ihren API-Schlüssel"
     }
 };
 

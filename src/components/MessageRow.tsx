@@ -9,6 +9,7 @@ import {Trash, Image as ImageIcon} from "lucide-react";
 import {Switch} from "@/components/ui/switch";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
+import {useIsMobile} from "@/hooks/use-mobile";
 
 interface MessageRowProps {
     message: Message;
@@ -26,6 +27,7 @@ export const MessageRow: React.FC<MessageRowProps> = ({
     const [includeImage, setIncludeImage] = useState<boolean>(false);
     const [imageUrl, setImageUrl] = useState<string>("");
     const [textContent, setTextContent] = useState<string>("");
+    const isMobile = useIsMobile();
 
     // Initialize state based on message content
     useEffect(() => {
@@ -95,9 +97,9 @@ export const MessageRow: React.FC<MessageRowProps> = ({
     return (
         <Card className="p-4">
             <div className="space-y-4">
-                <div className="flex gap-4 items-start">
+                <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} gap-4 items-start`}>
                     <Select value={message.role} onValueChange={handleRoleChange}>
-                        <SelectTrigger className="w-32">
+                        <SelectTrigger className={isMobile ? "w-full" : "w-32"}>
                             <SelectValue placeholder="Select role"/>
                         </SelectTrigger>
                         <SelectContent>
@@ -107,12 +109,12 @@ export const MessageRow: React.FC<MessageRowProps> = ({
                         </SelectContent>
                     </Select>
 
-                    <div className="flex-1">
+                    <div className="flex-1 w-full">
                         <Textarea
                             value={textContent}
                             onChange={handleContentChange}
                             placeholder="Inserisci il contenuto del messaggio..."
-                            className="min-h-[100px]"
+                            className="min-h-[100px] w-full"
                         />
                     </div>
 
@@ -121,7 +123,7 @@ export const MessageRow: React.FC<MessageRowProps> = ({
                             variant="ghost"
                             size="icon"
                             onClick={onRemove}
-                            className="text-red-500 hover:text-red-700"
+                            className={`text-red-500 hover:text-red-700 ${isMobile ? 'self-end' : ''}`}
                         >
                             <Trash className="h-5 w-5"/>
                         </Button>
@@ -129,7 +131,7 @@ export const MessageRow: React.FC<MessageRowProps> = ({
                 </div>
                 
                 {message.role === "user" && (
-                    <div className="flex items-center gap-4">
+                    <div className={`flex ${isMobile ? 'flex-col' : 'items-center'} gap-4`}>
                         <div className="flex items-center space-x-2">
                             <Switch 
                                 id={`add-image-${message.role}`} 
@@ -143,7 +145,7 @@ export const MessageRow: React.FC<MessageRowProps> = ({
                         </div>
                         
                         {includeImage && (
-                            <div className="flex-1">
+                            <div className="flex-1 w-full">
                                 <Input
                                     value={imageUrl}
                                     onChange={handleImageUrlChange}

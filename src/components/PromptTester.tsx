@@ -1,3 +1,4 @@
+
 import React, {useState, useEffect} from "react";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
@@ -19,11 +20,19 @@ import {
 } from "@/lib/storage";
 import {MessageRow} from "@/components/MessageRow";
 import {HistoryList} from "@/components/HistoryList";
-import {Copy, Plus, Send, Trash} from "lucide-react";
+import {Copy, Plus, Send, Trash, Settings, ExternalLink} from "lucide-react";
 import {OpenAITutorial} from "@/components/OpenAITutorial";
 import LanguageSelector from "@/components/LanguageSelector";
 import {useLanguage} from "@/contexts/LanguageContext";
 import {getTranslation} from "@/lib/translations";
+import {useIsMobile} from "@/hooks/use-mobile";
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
 
 export const PromptTester: React.FC = () => {
     const {toast} = useToast();
@@ -39,6 +48,7 @@ export const PromptTester: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const [history, setHistory] = useState<HistoryItem[]>([]);
     const [activeTab, setActiveTab] = useState("editor");
+    const isMobile = useIsMobile();
 
     // Load saved values from localStorage on component mount
     useEffect(() => {
@@ -251,94 +261,175 @@ export const PromptTester: React.FC = () => {
         }
     };
 
+    // Mobile Configuration Dialog component
+    const ConfigurationDialog = () => (
+        <Dialog>
+            <DialogTrigger asChild>
+                <Button variant="outline" size="sm" className="mb-2">
+                    <Settings className="h-4 w-4 mr-2" />
+                    {getTranslation(language, "configuration")}
+                </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                    <DialogTitle>{getTranslation(language, "configuration")}</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4 py-4">
+                    <div className="space-y-2">
+                        <Label htmlFor="mobile-api-token">{getTranslation(language, "apiToken")}</Label>
+                        <Input
+                            id="mobile-api-token"
+                            type="password"
+                            value={apiToken}
+                            onChange={(e) => setApiToken(e.target.value)}
+                            placeholder="sk-..."
+                        />
+                    </div>
+                    
+                    <div className="space-y-2">
+                        <Label htmlFor="mobile-model">{getTranslation(language, "model")}</Label>
+                        <Select value={model} onValueChange={setModel}>
+                            <SelectTrigger id="mobile-model">
+                                <SelectValue placeholder={getTranslation(language, "model")}/>
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="gpt-4o-mini">gpt-4o-mini</SelectItem>
+                                <SelectItem value="gpt-4o">gpt-4o</SelectItem>
+                                <SelectItem value="gpt-4.5-preview">gpt-4.5-preview</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label htmlFor="mobile-max-tokens">
+                            {getTranslation(language, "maxTokens")}: {maxTokens}
+                        </Label>
+                        <Slider
+                            id="mobile-max-tokens"
+                            min={1}
+                            max={2000}
+                            step={1}
+                            value={[maxTokens]}
+                            onValueChange={(value) => setMaxTokens(value[0])}
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label htmlFor="mobile-temperature">
+                            {getTranslation(language, "temperature")}: {temperature.toFixed(1)}
+                        </Label>
+                        <Slider
+                            id="mobile-temperature"
+                            min={0}
+                            max={2}
+                            step={0.1}
+                            value={[temperature]}
+                            onValueChange={(value) => setTemperature(value[0])}
+                        />
+                    </div>
+                </div>
+            </DialogContent>
+        </Dialog>
+    );
+
     return (
-        <div className="container mx-auto py-6 max-w-6xl">
+        <div className="container mx-auto py-6 max-w-6xl px-4">
             <Card className="mb-6">
                 <CardHeader>
-                    <CardTitle className="flex items-center justify-between">
+                    <CardTitle className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <span>{getTranslation(language, "appTitle")}</span>
-                        <div className="flex items-center gap-2">
-                            <Label htmlFor="openai-token"
-                                   className="mr-2">{getTranslation(language, "apiToken")}</Label>
-                            <Input
-                                id="openai-token"
-                                type="password"
-                                value={apiToken}
-                                onChange={(e) => setApiToken(e.target.value)}
-                                placeholder="sk-..."
-                                className="w-64"
-                            />
-                            <LanguageSelector/>
-                        </div>
+                        {!isMobile ? (
+                            <div className="flex items-center gap-2">
+                                <Label htmlFor="openai-token"
+                                    className="mr-2">{getTranslation(language, "apiToken")}</Label>
+                                <Input
+                                    id="openai-token"
+                                    type="password"
+                                    value={apiToken}
+                                    onChange={(e) => setApiToken(e.target.value)}
+                                    placeholder="sk-..."
+                                    className="w-64"
+                                />
+                                <LanguageSelector/>
+                            </div>
+                        ) : (
+                            <div className="flex items-center gap-2">
+                                <LanguageSelector />
+                            </div>
+                        )}
                     </CardTitle>
                 </CardHeader>
             </Card>
 
-            <OpenAITutorial/>
+            {!isMobile && <OpenAITutorial />}
 
-            <Tabs value={activeTab} onValueChange={setActiveTab}>
-                <TabsList className="mb-4">
-                    <TabsTrigger value="editor">{getTranslation(language, "editor")}</TabsTrigger>
-                    <TabsTrigger value="history">{getTranslation(language, "history")}</TabsTrigger>
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+                <TabsList className="mb-4 w-full">
+                    <TabsTrigger value="editor" className="flex-1">{getTranslation(language, "editor")}</TabsTrigger>
+                    <TabsTrigger value="history" className="flex-1">{getTranslation(language, "history")}</TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="editor" className="space-y-6">
+                    {isMobile && <ConfigurationDialog />}
+
+                    {!isMobile && (
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>{getTranslation(language, "configuration")}</CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <div className="space-y-2">
+                                        <Label htmlFor="model">{getTranslation(language, "model")}</Label>
+                                        <Select value={model} onValueChange={setModel}>
+                                            <SelectTrigger id="model">
+                                                <SelectValue placeholder={getTranslation(language, "model")}/>
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="gpt-4o-mini">gpt-4o-mini</SelectItem>
+                                                <SelectItem value="gpt-4o">gpt-4o</SelectItem>
+                                                <SelectItem value="gpt-4.5-preview">gpt-4.5-preview</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+
+                                    <div>
+                                        <Label
+                                            htmlFor="max-tokens">{getTranslation(language, "maxTokens")}: {maxTokens}</Label>
+                                        <Slider
+                                            className="mt-6"
+                                            id="max-tokens"
+                                            min={1}
+                                            max={2000}
+                                            step={1}
+                                            value={[maxTokens]}
+                                            onValueChange={(value) => setMaxTokens(value[0])}
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <Label
+                                            htmlFor="temperature">{getTranslation(language, "temperature")}: {temperature.toFixed(1)}</Label>
+                                        <Slider
+                                            className="mt-6"
+                                            id="temperature"
+                                            min={0}
+                                            max={2}
+                                            step={0.1}
+                                            value={[temperature]}
+                                            onValueChange={(value) => setTemperature(value[0])}
+                                        />
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    )}
+
                     <Card>
                         <CardHeader>
-                            <CardTitle>{getTranslation(language, "configuration")}</CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            <div className="grid grid-cols-3 gap-6">
-                                <div className="space-y-2">
-                                    <Label htmlFor="model">{getTranslation(language, "model")}</Label>
-                                    <Select value={model} onValueChange={setModel}>
-                                        <SelectTrigger id="model">
-                                            <SelectValue placeholder={getTranslation(language, "model")}/>
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="gpt-4o-mini">gpt-4o-mini</SelectItem>
-                                            <SelectItem value="gpt-4o">gpt-4o</SelectItem>
-                                            <SelectItem value="gpt-4.5-preview">gpt-4.5-preview</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-
-                                <div>
-                                    <Label
-                                        htmlFor="max-tokens">{getTranslation(language, "maxTokens")}: {maxTokens}</Label>
-                                    <Slider
-                                        className="mt-6"
-                                        id="max-tokens"
-                                        min={1}
-                                        max={2000}
-                                        step={1}
-                                        value={[maxTokens]}
-                                        onValueChange={(value) => setMaxTokens(value[0])}
-                                    />
-                                </div>
-
-                                <div>
-                                    <Label
-                                        htmlFor="temperature">{getTranslation(language, "temperature")}: {temperature.toFixed(1)}</Label>
-                                    <Slider
-                                        className="mt-6"
-                                        id="temperature"
-                                        min={0}
-                                        max={2}
-                                        step={0.1}
-                                        value={[temperature]}
-                                        onValueChange={(value) => setTemperature(value[0])}
-                                    />
-                                </div>
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    <Card>
-                        <CardHeader>
-                            <CardTitle className="flex items-center justify-between">
+                            <CardTitle className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                                 <span>{getTranslation(language, "messages")}</span>
-                                <div className="flex gap-2">
+                                <div className="flex flex-wrap gap-2">
                                     <Button variant="outline" size="sm" onClick={importConfig}>
                                         {getTranslation(language, "import")}
                                     </Button>
@@ -390,7 +481,7 @@ export const PromptTester: React.FC = () => {
                     {response && (
                         <Card>
                             <CardHeader>
-                                <CardTitle className="flex items-center justify-between">
+                                <CardTitle className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                                     <span>{getTranslation(language, "response")}</span>
                                     <Button
                                         variant="outline"
@@ -403,7 +494,7 @@ export const PromptTester: React.FC = () => {
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <div className="bg-gray-50 p-4 rounded-md whitespace-pre-wrap font-mono text-sm">
+                                <div className="bg-gray-50 p-4 rounded-md whitespace-pre-wrap font-mono text-sm overflow-x-auto">
                                     {response}
                                 </div>
                             </CardContent>

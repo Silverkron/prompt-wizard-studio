@@ -1,4 +1,3 @@
-
 import React, {useState, useEffect} from "react";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
@@ -20,19 +19,17 @@ import {
 } from "@/lib/storage";
 import {MessageRow} from "@/components/MessageRow";
 import {HistoryList} from "@/components/HistoryList";
-import {Copy, Plus, Send, Trash, Settings, ExternalLink} from "lucide-react";
+import {Copy, Plus, Send, Settings, ExternalLink, ChevronDown} from "lucide-react";
 import {OpenAITutorial} from "@/components/OpenAITutorial";
 import LanguageSelector from "@/components/LanguageSelector";
 import {useLanguage} from "@/contexts/LanguageContext";
 import {getTranslation} from "@/lib/translations";
 import {useIsMobile} from "@/hooks/use-mobile";
 import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog";
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
 export const PromptTester: React.FC = () => {
     const {toast} = useToast();
@@ -49,6 +46,8 @@ export const PromptTester: React.FC = () => {
     const [history, setHistory] = useState<HistoryItem[]>([]);
     const [activeTab, setActiveTab] = useState("editor");
     const isMobile = useIsMobile();
+    const [isConfigOpen, setIsConfigOpen] = useState(false);
+    const [isTutorialOpen, setIsTutorialOpen] = useState(true);
 
     // Load saved values from localStorage on component mount
     useEffect(() => {
@@ -261,75 +260,121 @@ export const PromptTester: React.FC = () => {
         }
     };
 
-    // Mobile Configuration Dialog component
-    const ConfigurationDialog = () => (
-        <Dialog>
-            <DialogTrigger asChild>
-                <Button variant="outline" size="sm" className="mb-2">
-                    <Settings className="h-4 w-4 mr-2" />
-                    {getTranslation(language, "configuration")}
-                </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                    <DialogTitle>{getTranslation(language, "configuration")}</DialogTitle>
-                </DialogHeader>
-                <div className="space-y-4 py-4">
-                    <div className="space-y-2">
-                        <Label htmlFor="mobile-api-token">{getTranslation(language, "apiToken")}</Label>
-                        <Input
-                            id="mobile-api-token"
-                            type="password"
-                            value={apiToken}
-                            onChange={(e) => setApiToken(e.target.value)}
-                            placeholder="sk-..."
-                        />
-                    </div>
-                    
-                    <div className="space-y-2">
-                        <Label htmlFor="mobile-model">{getTranslation(language, "model")}</Label>
-                        <Select value={model} onValueChange={setModel}>
-                            <SelectTrigger id="mobile-model">
-                                <SelectValue placeholder={getTranslation(language, "model")}/>
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="gpt-4o-mini">gpt-4o-mini</SelectItem>
-                                <SelectItem value="gpt-4o">gpt-4o</SelectItem>
-                                <SelectItem value="gpt-4.5-preview">gpt-4.5-preview</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-
-                    <div className="space-y-2">
-                        <Label htmlFor="mobile-max-tokens">
-                            {getTranslation(language, "maxTokens")}: {maxTokens}
-                        </Label>
-                        <Slider
-                            id="mobile-max-tokens"
-                            min={1}
-                            max={2000}
-                            step={1}
-                            value={[maxTokens]}
-                            onValueChange={(value) => setMaxTokens(value[0])}
-                        />
-                    </div>
-
-                    <div className="space-y-2">
-                        <Label htmlFor="mobile-temperature">
-                            {getTranslation(language, "temperature")}: {temperature.toFixed(1)}
-                        </Label>
-                        <Slider
-                            id="mobile-temperature"
-                            min={0}
-                            max={2}
-                            step={0.1}
-                            value={[temperature]}
-                            onValueChange={(value) => setTemperature(value[0])}
-                        />
-                    </div>
+    // Mobile Configuration Collapsible component
+    const MobileConfigurationCollapsible = () => (
+        <Collapsible
+            open={isConfigOpen}
+            onOpenChange={setIsConfigOpen}
+            className="w-full mb-4 border rounded-lg bg-white shadow-sm"
+        >
+            <div className="flex items-center justify-between px-4 py-3 border-b">
+                <h3 className="text-sm font-medium">{getTranslation(language, "configuration")}</h3>
+                <CollapsibleTrigger asChild>
+                    <Button variant="ghost" size="sm" className="p-0 h-7 w-7">
+                        <ChevronDown className={`h-4 w-4 transition-transform ${isConfigOpen ? 'transform rotate-180' : ''}`} />
+                    </Button>
+                </CollapsibleTrigger>
+            </div>
+            <CollapsibleContent className="px-4 py-3 space-y-4">
+                <div className="space-y-2">
+                    <Label htmlFor="mobile-api-token">{getTranslation(language, "apiToken")}</Label>
+                    <Input
+                        id="mobile-api-token"
+                        type="password"
+                        value={apiToken}
+                        onChange={(e) => setApiToken(e.target.value)}
+                        placeholder="sk-..."
+                    />
                 </div>
-            </DialogContent>
-        </Dialog>
+                
+                <div className="space-y-2">
+                    <Label htmlFor="mobile-model">{getTranslation(language, "model")}</Label>
+                    <Select value={model} onValueChange={setModel}>
+                        <SelectTrigger id="mobile-model">
+                            <SelectValue placeholder={getTranslation(language, "model")}/>
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="gpt-4o-mini">gpt-4o-mini</SelectItem>
+                            <SelectItem value="gpt-4o">gpt-4o</SelectItem>
+                            <SelectItem value="gpt-4.5-preview">gpt-4.5-preview</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
+
+                <div className="space-y-2">
+                    <Label htmlFor="mobile-max-tokens">
+                        {getTranslation(language, "maxTokens")}: {maxTokens}
+                    </Label>
+                    <Slider
+                        id="mobile-max-tokens"
+                        min={1}
+                        max={2000}
+                        step={1}
+                        value={[maxTokens]}
+                        onValueChange={(value) => setMaxTokens(value[0])}
+                    />
+                </div>
+
+                <div className="space-y-2">
+                    <Label htmlFor="mobile-temperature">
+                        {getTranslation(language, "temperature")}: {temperature.toFixed(1)}
+                    </Label>
+                    <Slider
+                        id="mobile-temperature"
+                        min={0}
+                        max={2}
+                        step={0.1}
+                        value={[temperature]}
+                        onValueChange={(value) => setTemperature(value[0])}
+                    />
+                </div>
+            </CollapsibleContent>
+        </Collapsible>
+    );
+
+    // Collapsible tutorial for both mobile and desktop
+    const TutorialCollapsible = () => (
+        <Collapsible
+            open={isTutorialOpen}
+            onOpenChange={setIsTutorialOpen}
+            className="w-full mb-6 border rounded-lg bg-white shadow-sm"
+        >
+            <div className="flex items-center justify-between px-4 py-3 border-b">
+                <h3 className="text-sm font-medium">{getTranslation(language, "openaiApiTutorial")}</h3>
+                <CollapsibleTrigger asChild>
+                    <Button variant="ghost" size="sm" className="p-0 h-7 w-7">
+                        <ChevronDown className={`h-4 w-4 transition-transform ${isTutorialOpen ? 'transform rotate-180' : ''}`} />
+                    </Button>
+                </CollapsibleTrigger>
+            </div>
+            <CollapsibleContent className="px-4 py-3">
+                {!isMobile && (
+                    <div className="space-y-4">
+                        <p className="text-sm text-gray-600">{getTranslation(language, "openaiApiTutorialSubtitle")}</p>
+                        <p>{getTranslation(language, "openaiApiTutorialText")}</p>
+                        <div className="flex justify-start">
+                            <Button variant="outline" onClick={() => window.open("https://platform.openai.com/api-keys", "_blank")}>
+                                <ExternalLink className="h-4 w-4 mr-2" />
+                                {getTranslation(language, "getApiKey")}
+                            </Button>
+                        </div>
+                    </div>
+                )}
+                {isMobile && (
+                    <div className="space-y-2">
+                        <p className="text-sm">
+                            {getTranslation(language, "openaiApiTutorialText")}
+                        </p>
+                        <div className="flex justify-start">
+                            <Button variant="outline" size="sm" onClick={() => window.open("https://platform.openai.com/api-keys", "_blank")}>
+                                <ExternalLink className="h-4 w-4 mr-2" />
+                                {getTranslation(language, "getApiKey")}
+                            </Button>
+                        </div>
+                    </div>
+                )}
+            </CollapsibleContent>
+        </Collapsible>
     );
 
     return (
@@ -361,7 +406,7 @@ export const PromptTester: React.FC = () => {
                 </CardHeader>
             </Card>
 
-            {!isMobile && <OpenAITutorial />}
+            <TutorialCollapsible />
 
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
                 <TabsList className="mb-4 w-full">
@@ -370,7 +415,7 @@ export const PromptTester: React.FC = () => {
                 </TabsList>
 
                 <TabsContent value="editor" className="space-y-6">
-                    {isMobile && <ConfigurationDialog />}
+                    {isMobile && <MobileConfigurationCollapsible />}
 
                     {!isMobile && (
                         <Card>

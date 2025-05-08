@@ -2,10 +2,26 @@
 import { encoding_for_model } from 'tiktoken';
 import { Message } from '@/types/openai';
 
+// Define proper model types for tiktoken
+type TiktokenModel = 
+  | 'gpt-4o-mini'
+  | 'gpt-4o'
+  | 'gpt-4.5-preview'
+  | 'gpt-4'
+  | 'gpt-3.5-turbo'
+  | 'text-embedding-ada-002'
+  | 'text-davinci-003'
+  | 'text-davinci-002'
+  | 'davinci'
+  | 'curie'
+  | 'babbage'
+  | 'ada'
+  | 'cl100k_base';
+
 // Function to count tokens in a string for a specific model
 export const countTokens = (text: string, model = 'gpt-3.5-turbo'): number => {
   try {
-    const encoder = encoding_for_model(model);
+    const encoder = encoding_for_model(model as TiktokenModel);
     const tokens = encoder.encode(text);
     encoder.free();
     return tokens.length;
@@ -14,7 +30,7 @@ export const countTokens = (text: string, model = 'gpt-3.5-turbo'): number => {
     
     // If model-specific encoding fails, try with cl100k_base which works for most models
     try {
-      const encoder = encoding_for_model('cl100k_base');
+      const encoder = encoding_for_model('cl100k_base' as TiktokenModel);
       const tokens = encoder.encode(text);
       encoder.free();
       return tokens.length;

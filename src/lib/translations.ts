@@ -39,7 +39,15 @@ export type TranslationKey =
     | "tokenEstimation"
     | "promptTokensEstimated"
     | "completionTokensEstimated"
-    | "totalTokensEstimated";
+    | "totalTokensEstimated"
+    | "tutorialStep1"
+    | "tutorialStep1Link"
+    | "tutorialStep2"
+    | "tutorialStep2Link"
+    | "tutorialStep3"
+    | "tutorialStep4"
+    | "tutorialStep4Link"
+    | "tutorialStep5";
 
 export const translations: Record<Language, Record<TranslationKey, string>> = {
     it: {
@@ -81,7 +89,15 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         tokenEstimation: "Stima dei token",
         promptTokensEstimated: "Token prompt (stimato)",
         completionTokensEstimated: "Token completamento (stimato)",
-        totalTokensEstimated: "Token totali (stimato)"
+        totalTokensEstimated: "Token totali (stimato)",
+        tutorialStep1: "Crea un account su OpenAI",
+        tutorialStep1Link: "Registrati",
+        tutorialStep2: "Vai alla pagina delle chiavi API",
+        tutorialStep2Link: "Chiavi API",
+        tutorialStep3: "Crea una nuova chiave API e copiala",
+        tutorialStep4: "Assicurati di avere un metodo di pagamento configurato",
+        tutorialStep4Link: "Configurazione pagamento",
+        tutorialStep5: "Incolla la tua chiave API nel campo 'Token API' sopra e inizia a usare l'app"
     },
     en: {
         appTitle: "OpenAI Prompt Tester",
@@ -122,7 +138,15 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         tokenEstimation: "Token Estimation",
         promptTokensEstimated: "Prompt tokens (estimated)",
         completionTokensEstimated: "Completion tokens (estimated)",
-        totalTokensEstimated: "Total tokens (estimated)"
+        totalTokensEstimated: "Total tokens (estimated)",
+        tutorialStep1: "Create an OpenAI account",
+        tutorialStep1Link: "Sign up",
+        tutorialStep2: "Go to the API keys page",
+        tutorialStep2Link: "API keys",
+        tutorialStep3: "Create a new API key and copy it",
+        tutorialStep4: "Make sure you have a payment method configured",
+        tutorialStep4Link: "Billing setup",
+        tutorialStep5: "Paste your API key in the 'API Token' field above and start using the app"
     },
     fr: {
         appTitle: "Testeur de Prompt pour OpenAI",
@@ -163,7 +187,15 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         tokenEstimation: "Estimation des tokens",
         promptTokensEstimated: "Tokens de prompt (estimé)",
         completionTokensEstimated: "Tokens de complétion (estimé)",
-        totalTokensEstimated: "Tokens totaux (estimé)"
+        totalTokensEstimated: "Tokens totaux (estimé)",
+        tutorialStep1: "Créez un compte OpenAI",
+        tutorialStep1Link: "S'inscrire",
+        tutorialStep2: "Accédez à la page des clés API",
+        tutorialStep2Link: "Clés API",
+        tutorialStep3: "Créez une nouvelle clé API et copiez-la",
+        tutorialStep4: "Assurez-vous d'avoir configuré un moyen de paiement",
+        tutorialStep4Link: "Configuration de paiement",
+        tutorialStep5: "Collez votre clé API dans le champ 'Jeton API' ci-dessus et commencez à utiliser l'application"
     },
     es: {
         appTitle: "Comprobador de Prompt para OpenAI",
@@ -204,7 +236,15 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         tokenEstimation: "Estimación de tokens",
         promptTokensEstimated: "Tokens de prompt (estimado)",
         completionTokensEstimated: "Tokens de finalización (estimado)",
-        totalTokensEstimated: "Tokens totales (estimado)"
+        totalTokensEstimated: "Tokens totales (estimado)",
+        tutorialStep1: "Crea una cuenta de OpenAI",
+        tutorialStep1Link: "Regístrate",
+        tutorialStep2: "Ve a la página de claves API",
+        tutorialStep2Link: "Claves API",
+        tutorialStep3: "Crea una nueva clave API y cópiala",
+        tutorialStep4: "Asegúrate de tener configurado un método de pago",
+        tutorialStep4Link: "Configuración de pago",
+        tutorialStep5: "Pega tu clave API en el campo 'Token API' arriba y comienza a usar la aplicación"
     },
     de: {
         appTitle: "OpenAI Prompt-Tester",
@@ -245,7 +285,15 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         tokenEstimation: "Token-Schätzung",
         promptTokensEstimated: "Prompt-Tokens (geschätzt)",
         completionTokensEstimated: "Completion-Tokens (geschätzt)",
-        totalTokensEstimated: "Gesamt-Tokens (geschätzt)"
+        totalTokensEstimated: "Gesamt-Tokens (geschätzt)",
+        tutorialStep1: "Erstellen Sie ein OpenAI-Konto",
+        tutorialStep1Link: "Registrieren",
+        tutorialStep2: "Gehen Sie zur API-Schlüsselseite",
+        tutorialStep2Link: "API-Schlüssel",
+        tutorialStep3: "Erstellen Sie einen neuen API-Schlüssel und kopieren Sie ihn",
+        tutorialStep4: "Stellen Sie sicher, dass eine Zahlungsmethode eingerichtet ist",
+        tutorialStep4Link: "Zahlungskonfiguration",
+        tutorialStep5: "Fügen Sie Ihren API-Schlüssel in das 'API-Token'-Feld oben ein und beginnen Sie mit der Nutzung der App"
     }
 };
 

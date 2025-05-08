@@ -1,3 +1,4 @@
+
 export type Language = "it" | "en" | "fr" | "es" | "de";
 
 export type TranslationKey =
@@ -40,7 +41,8 @@ export type TranslationKey =
     | "format"
     | "promptTokens"
     | "completionTokens"
-    | "totalTokens";
+    | "totalTokens"
+    | "estimatedCost";
 
 export const translations: Record<Language, Record<TranslationKey, string>> = {
     it: {
@@ -83,7 +85,8 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         format: "Formatta",
         promptTokens: "Token del prompt:",
         completionTokens: "Token della risposta:",
-        totalTokens: "Token totali:"
+        totalTokens: "Token totali:",
+        estimatedCost: "Costo stimato:"
     },
     en: {
         appTitle: "OpenAI Prompt Tester",
@@ -125,7 +128,8 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         format: "Format",
         promptTokens: "Prompt tokens:",
         completionTokens: "Completion tokens:",
-        totalTokens: "Total tokens:"
+        totalTokens: "Total tokens:",
+        estimatedCost: "Estimated cost:"
     },
     fr: {
         appTitle: "Testeur de Prompt pour OpenAI",
@@ -167,7 +171,8 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         format: "Formater",
         promptTokens: "Tokens de l'invite:",
         completionTokens: "Tokens de réponse:",
-        totalTokens: "Tokens totaux:"
+        totalTokens: "Tokens totaux:",
+        estimatedCost: "Coût estimé:"
     },
     es: {
         appTitle: "Comprobador de Prompt para OpenAI",
@@ -209,7 +214,8 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         format: "Formatear",
         promptTokens: "Tokens de entrada:",
         completionTokens: "Tokens de respuesta:",
-        totalTokens: "Tokens totales:"
+        totalTokens: "Tokens totales:",
+        estimatedCost: "Coste estimado:"
     },
     de: {
         appTitle: "OpenAI Prompt-Tester",
@@ -251,7 +257,8 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         format: "Formatieren",
         promptTokens: "Prompt-Tokens:",
         completionTokens: "Antwort-Tokens:",
-        totalTokens: "Gesamttokens:"
+        totalTokens: "Gesamttokens:",
+        estimatedCost: "Geschätzte Kosten:"
     }
 };
 

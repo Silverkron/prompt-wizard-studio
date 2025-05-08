@@ -1,3 +1,4 @@
+
 import React, {useState, useEffect} from "react";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
@@ -25,6 +26,7 @@ import LanguageSelector from "@/components/LanguageSelector";
 import {useLanguage} from "@/contexts/LanguageContext";
 import {getTranslation} from "@/lib/translations";
 import {useIsMobile} from "@/hooks/use-mobile";
+import {calculateTokenCost, formatCost} from "@/lib/tokenCost";
 import {
     Collapsible,
     CollapsibleContent,
@@ -548,6 +550,12 @@ export const PromptTester: React.FC = () => {
                                             <span className="font-semibold">{getTranslation(language, "totalTokens")}</span>
                                             <span>{tokenUsage.total_tokens}</span>
                                         </div>
+                                        {tokenUsage && (
+                                            <div className="flex items-center gap-1">
+                                                <span className="font-semibold">{getTranslation(language, "estimatedCost")}</span>
+                                                <span>{formatCost(calculateTokenCost(model, tokenUsage.prompt_tokens, tokenUsage.completion_tokens))}</span>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             )}

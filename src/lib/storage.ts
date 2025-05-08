@@ -1,4 +1,3 @@
-
 import { HistoryItem, Message, PromptConfig } from "@/types/openai";
 
 const STORAGE_KEYS = {
@@ -42,6 +41,7 @@ export const getTemperature = (): number => {
   return parseFloat(localStorage.getItem(STORAGE_KEYS.TEMPERATURE) || "0.7");
 };
 
+// Updated to limit to 5 items
 export const savePromptHistory = (history: HistoryItem[]): void => {
   localStorage.setItem(STORAGE_KEYS.HISTORY, JSON.stringify(history));
 };
@@ -51,10 +51,11 @@ export const getPromptHistory = (): HistoryItem[] => {
   return history ? JSON.parse(history) : [];
 };
 
+// Updated to keep only the 5 most recent items
 export const addToHistory = (item: HistoryItem): void => {
   const history = getPromptHistory();
   history.unshift(item);
-  savePromptHistory(history.slice(0, 50)); // Keep only the 50 most recent items
+  savePromptHistory(history.slice(0, 5)); // Keep only the 5 most recent items
 };
 
 export const clearHistory = (): void => {

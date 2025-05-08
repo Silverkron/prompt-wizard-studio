@@ -2,7 +2,10 @@
 import { encoding_for_model } from 'tiktoken';
 import { Message } from '@/types/openai';
 
-// Define proper model types for tiktoken
+// Import the actual TiktokenModel type from the package
+import type { TiktokenModel as TiktokenPackageModel } from 'tiktoken';
+
+// Define proper model types as a union of string literals matching what the package accepts
 type TiktokenModel = 
   | 'gpt-4o-mini'
   | 'gpt-4o'
@@ -21,7 +24,8 @@ type TiktokenModel =
 // Function to count tokens in a string for a specific model
 export const countTokens = (text: string, model = 'gpt-3.5-turbo'): number => {
   try {
-    const encoder = encoding_for_model(model as TiktokenModel);
+    // Use the model as a parameter directly without type casting
+    const encoder = encoding_for_model(model as unknown as TiktokenPackageModel);
     const tokens = encoder.encode(text);
     encoder.free();
     return tokens.length;
@@ -30,7 +34,7 @@ export const countTokens = (text: string, model = 'gpt-3.5-turbo'): number => {
     
     // If model-specific encoding fails, try with cl100k_base which works for most models
     try {
-      const encoder = encoding_for_model('cl100k_base' as TiktokenModel);
+      const encoder = encoding_for_model('cl100k_base' as unknown as TiktokenPackageModel);
       const tokens = encoder.encode(text);
       encoder.free();
       return tokens.length;

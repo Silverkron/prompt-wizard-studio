@@ -37,7 +37,10 @@ export type TranslationKey =
     | "openaiApiTutorialText"
     | "openaiApiTutorialSubtitle"
     | "getApiKey"
-    | "format";
+    | "format"
+    | "promptTokens"
+    | "completionTokens"
+    | "totalTokens";
 
 export const translations: Record<Language, Record<TranslationKey, string>> = {
     it: {
@@ -77,7 +80,10 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         openaiApiTutorialText: "Per utilizzare questo strumento, avrai bisogno di una chiave API OpenAI. Segui il link qui sotto per ottenerla.",
         openaiApiTutorialSubtitle: "Come ottenere e utilizzare la tua chiave API",
         getApiKey: "Ottieni la tua chiave API",
-        format: "Formatta"
+        format: "Formatta",
+        promptTokens: "Token del prompt:",
+        completionTokens: "Token della risposta:",
+        totalTokens: "Token totali:"
     },
     en: {
         appTitle: "OpenAI Prompt Tester",
@@ -116,7 +122,10 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         openaiApiTutorialText: "To use this tool, you'll need an OpenAI API key. Follow the link below to get one.",
         openaiApiTutorialSubtitle: "How to get and use your API key",
         getApiKey: "Get your API key",
-        format: "Format"
+        format: "Format",
+        promptTokens: "Prompt tokens:",
+        completionTokens: "Completion tokens:",
+        totalTokens: "Total tokens:"
     },
     fr: {
         appTitle: "Testeur de Prompt pour OpenAI",
@@ -155,7 +164,10 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         openaiApiTutorialText: "Pour utiliser cet outil, vous aurez besoin d'une clé API OpenAI. Suivez le lien ci-dessous pour en obtenir une.",
         openaiApiTutorialSubtitle: "Comment obtenir et utiliser votre clé API",
         getApiKey: "Obtenez votre clé API",
-        format: "Formater"
+        format: "Formater",
+        promptTokens: "Tokens de l'invite:",
+        completionTokens: "Tokens de réponse:",
+        totalTokens: "Tokens totaux:"
     },
     es: {
         appTitle: "Comprobador de Prompt para OpenAI",
@@ -194,7 +206,10 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         openaiApiTutorialText: "Para usar esta herramienta, necesitarás una clave API de OpenAI. Sigue el enlace de abajo para obtener una.",
         openaiApiTutorialSubtitle: "Cómo obtener y usar tu clave API",
         getApiKey: "Obtén tu clave API",
-        format: "Formatear"
+        format: "Formatear",
+        promptTokens: "Tokens de entrada:",
+        completionTokens: "Tokens de respuesta:",
+        totalTokens: "Tokens totales:"
     },
     de: {
         appTitle: "OpenAI Prompt-Tester",
@@ -233,7 +248,10 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         openaiApiTutorialText: "Um dieses Tool zu verwenden, benötigen Sie einen OpenAI API-Schlüssel. Folgen Sie dem Link unten, um einen zu erhalten.",
         openaiApiTutorialSubtitle: "Wie Sie Ihren API-Schlüssel erhalten und verwenden",
         getApiKey: "Holen Sie sich Ihren API-Schlüssel",
-        format: "Formatieren"
+        format: "Formatieren",
+        promptTokens: "Prompt-Tokens:",
+        completionTokens: "Antwort-Tokens:",
+        totalTokens: "Gesamttokens:"
     }
 };
 

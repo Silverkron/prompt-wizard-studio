@@ -520,7 +520,7 @@ export const PromptTester: React.FC = () => {
                                             className="flex items-center gap-1"
                                         >
                                             <FileText className="h-4 w-4" />
-                                            {getTranslation(language, "format") || "Format"}
+                                            {getTranslation(language, "format")}
                                         </Button>
                                         <Button
                                             variant="outline"
@@ -537,15 +537,15 @@ export const PromptTester: React.FC = () => {
                                 <div className="px-6 py-2 bg-slate-100 border-b border-slate-200">
                                     <div className="flex flex-wrap gap-4 text-sm">
                                         <div className="flex items-center gap-1">
-                                            <span className="font-semibold">Prompt tokens:</span>
+                                            <span className="font-semibold">{getTranslation(language, "promptTokens")}</span>
                                             <span>{tokenUsage.prompt_tokens}</span>
                                         </div>
                                         <div className="flex items-center gap-1">
-                                            <span className="font-semibold">Completion tokens:</span>
+                                            <span className="font-semibold">{getTranslation(language, "completionTokens")}</span>
                                             <span>{tokenUsage.completion_tokens}</span>
                                         </div>
                                         <div className="flex items-center gap-1">
-                                            <span className="font-semibold">Total tokens:</span>
+                                            <span className="font-semibold">{getTranslation(language, "totalTokens")}</span>
                                             <span>{tokenUsage.total_tokens}</span>
                                         </div>
                                     </div>

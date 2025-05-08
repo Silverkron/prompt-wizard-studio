@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import {Card} from "@/components/ui/card";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
@@ -10,6 +9,8 @@ import {Switch} from "@/components/ui/switch";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import {useIsMobile} from "@/hooks/use-mobile";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { getTranslation } from "@/lib/translations";
 
 interface MessageRowProps {
     message: Message;
@@ -28,6 +29,7 @@ export const MessageRow: React.FC<MessageRowProps> = ({
     const [imageUrl, setImageUrl] = useState<string>("");
     const [textContent, setTextContent] = useState<string>("");
     const isMobile = useIsMobile();
+    const { language } = useLanguage();
 
     // Initialize state based on message content
     useEffect(() => {
@@ -131,7 +133,7 @@ export const MessageRow: React.FC<MessageRowProps> = ({
                             className="flex items-center gap-1"
                         >
                             <FileText className="h-4 w-4" />
-                            Format
+                            {getTranslation(language, "format")}
                         </Button>
                     </div>
 

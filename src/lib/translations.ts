@@ -2,44 +2,27 @@ export type Language = "it" | "en" | "fr" | "es" | "de";
 
 export type TranslationKey =
     | "appTitle"
-    | "editor"
-    | "history"
+    | "apiToken"
     | "configuration"
     | "model"
     | "maxTokens"
     | "temperature"
     | "messages"
-    | "export"
     | "import"
+    | "export"
     | "addMessage"
+    | "role"
+    | "content"
     | "send"
-    | "processing"
     | "response"
     | "copy"
-    | "apiToken"
+    | "processing"
     | "error"
     | "success"
-    | "clearHistory"
-    | "systemMessage"
-    | "userMessage"
-    | "assistantMessage"
-    | "date"
-    | "noHistory"
-    | "remove"
-    | "confirmation"
-    | "confirmClearHistory"
-    | "cancel"
-    | "confirm"
+    | "history"
+    | "editor"
+    | "clear"
     | "tutorialTitle"
-    | "openaiApiTutorial"
-    | "openaiApiTutorialText"
-    | "openaiApiTutorialSubtitle"
-    | "getApiKey"
-    | "format"
-    | "tokenEstimation"
-    | "promptTokensEstimated"
-    | "completionTokensEstimated"
-    | "totalTokensEstimated"
     | "tutorialStep1"
     | "tutorialStep1Link"
     | "tutorialStep2"
@@ -47,253 +30,210 @@ export type TranslationKey =
     | "tutorialStep3"
     | "tutorialStep4"
     | "tutorialStep4Link"
-    | "tutorialStep5";
+    | "tutorialStep5"
+    | "tutorialStep5Tool"
+    | "languageSelector"
+    | "openaiApiTutorial"
+    | "openaiApiTutorialText"
+    | "openaiApiTutorialSubtitle"
+    | "getApiKey"
+    | "format";
 
 export const translations: Record<Language, Record<TranslationKey, string>> = {
     it: {
-        appTitle: "Testatore di Prompt per OpenAI",
-        editor: "Editor",
-        history: "Cronologia",
+        appTitle: "Tester di Prompt per OpenAI",
+        apiToken: "Token API OpenAI",
         configuration: "Configurazione",
         model: "Modello",
-        maxTokens: "Token massimi",
+        maxTokens: "Max Tokens",
         temperature: "Temperatura",
         messages: "Messaggi",
-        export: "Esporta",
         import: "Importa",
-        addMessage: "Aggiungi messaggio",
+        export: "Esporta",
+        addMessage: "Aggiungi Messaggio",
+        role: "Ruolo",
+        content: "Contenuto",
         send: "Invia",
-        processing: "Elaborazione...",
         response: "Risposta",
         copy: "Copia",
-        apiToken: "Token API",
+        processing: "Elaborazione...",
         error: "Errore",
         success: "Successo",
-        clearHistory: "Cancella cronologia",
-        systemMessage: "Messaggio di sistema",
-        userMessage: "Messaggio utente",
-        assistantMessage: "Messaggio assistente",
-        date: "Data",
-        noHistory: "Nessuna cronologia",
-        remove: "Rimuovi",
-        confirmation: "Conferma",
-        confirmClearHistory: "Sei sicuro di voler cancellare tutta la cronologia?",
-        cancel: "Annulla",
-        confirm: "Conferma",
-        tutorialTitle: "Come ottenere il tuo token API",
+        history: "Storico",
+        editor: "Editor",
+        clear: "Cancella",
+        tutorialTitle: "Come ottengo la chiave di OpenAI?",
+        tutorialStep1: "Effettua l'accesso al tuo profilo OpenAI oppure registra subito un nuovo account da",
+        tutorialStep1Link: "qui",
+        tutorialStep2: "Dopo aver effettuato l'accesso navigare nella sezione \"API Keys\"",
+        tutorialStep2Link: "tramite questo link",
+        tutorialStep3: "Nella pagina delle chiavi API, troverai il pulsante \"Create new secret key\". Cliccalo e segui le istruzioni per generare una nuova chiave.",
+        tutorialStep4: "OpenAI potrebbe offrirti un credito iniziale per darti la possibilità di effettuare i primi test. Una volta esaurito il vostro credito sarà necessario aggiungere ulteriori fondi al vostro account visitando la",
+        tutorialStep4Link: "sezione di fatturazione",
+        tutorialStep5: "Ci siamo! Incolla qui la tua secret key e attiverai l'AI Assistant. Ricordati di custodire sempre la tua chiave in un posto sicuro",
+        tutorialStep5Tool: "lo strumento di monitoraggio",
+        languageSelector: "Lingua",
         openaiApiTutorial: "Tutorial API OpenAI",
         openaiApiTutorialText: "Per utilizzare questo strumento, avrai bisogno di una chiave API OpenAI. Segui il link qui sotto per ottenerla.",
         openaiApiTutorialSubtitle: "Come ottenere e utilizzare la tua chiave API",
         getApiKey: "Ottieni la tua chiave API",
-        format: "Formatta",
-        tokenEstimation: "Stima dei token",
-        promptTokensEstimated: "Token prompt (stimato)",
-        completionTokensEstimated: "Token completamento (stimato)",
-        totalTokensEstimated: "Token totali (stimato)",
-        tutorialStep1: "Crea un account su OpenAI",
-        tutorialStep1Link: "Registrati",
-        tutorialStep2: "Vai alla pagina delle chiavi API",
-        tutorialStep2Link: "Chiavi API",
-        tutorialStep3: "Crea una nuova chiave API e copiala",
-        tutorialStep4: "Assicurati di avere un metodo di pagamento configurato",
-        tutorialStep4Link: "Configurazione pagamento",
-        tutorialStep5: "Incolla la tua chiave API nel campo 'Token API' sopra e inizia a usare l'app"
+        format: "Formatta"
     },
     en: {
         appTitle: "OpenAI Prompt Tester",
-        editor: "Editor",
-        history: "History",
+        apiToken: "OpenAI API Token",
         configuration: "Configuration",
         model: "Model",
         maxTokens: "Max Tokens",
         temperature: "Temperature",
         messages: "Messages",
-        export: "Export",
         import: "Import",
+        export: "Export",
         addMessage: "Add Message",
+        role: "Role",
+        content: "Content",
         send: "Send",
-        processing: "Processing...",
         response: "Response",
         copy: "Copy",
-        apiToken: "API Token",
+        processing: "Processing...",
         error: "Error",
         success: "Success",
-        clearHistory: "Clear History",
-        systemMessage: "System Message",
-        userMessage: "User Message",
-        assistantMessage: "Assistant Message",
-        date: "Date",
-        noHistory: "No history",
-        remove: "Remove",
-        confirmation: "Confirmation",
-        confirmClearHistory: "Are you sure you want to clear all history?",
-        cancel: "Cancel",
-        confirm: "Confirm",
-        tutorialTitle: "How to get your API token",
+        history: "History",
+        editor: "Editor",
+        clear: "Clear",
+        tutorialTitle: "How do I get an OpenAI key?",
+        tutorialStep1: "Log in to your OpenAI profile or register a new account",
+        tutorialStep1Link: "here",
+        tutorialStep2: "After logging in, navigate to the \"API Keys\" section",
+        tutorialStep2Link: "via this link",
+        tutorialStep3: "On the API keys page, you'll find the \"Create new secret key\" button. Click it and follow the instructions to generate a new key.",
+        tutorialStep4: "OpenAI might offer you initial credit to give you the ability to perform your first tests. Once your credit is exhausted, you'll need to add more funds to your account by visiting the",
+        tutorialStep4Link: "billing section",
+        tutorialStep5: "We're done! Paste your secret key here and you'll activate the AI Assistant. Remember to always keep your key in a safe place",
+        tutorialStep5Tool: "the monitoring tool",
+        languageSelector: "Language",
         openaiApiTutorial: "OpenAI API Tutorial",
         openaiApiTutorialText: "To use this tool, you'll need an OpenAI API key. Follow the link below to get one.",
         openaiApiTutorialSubtitle: "How to get and use your API key",
         getApiKey: "Get your API key",
-        format: "Format",
-        tokenEstimation: "Token Estimation",
-        promptTokensEstimated: "Prompt tokens (estimated)",
-        completionTokensEstimated: "Completion tokens (estimated)",
-        totalTokensEstimated: "Total tokens (estimated)",
-        tutorialStep1: "Create an OpenAI account",
-        tutorialStep1Link: "Sign up",
-        tutorialStep2: "Go to the API keys page",
-        tutorialStep2Link: "API keys",
-        tutorialStep3: "Create a new API key and copy it",
-        tutorialStep4: "Make sure you have a payment method configured",
-        tutorialStep4Link: "Billing setup",
-        tutorialStep5: "Paste your API key in the 'API Token' field above and start using the app"
+        format: "Format"
     },
     fr: {
         appTitle: "Testeur de Prompt pour OpenAI",
-        editor: "Éditeur",
-        history: "Historique",
+        apiToken: "Token API OpenAI",
         configuration: "Configuration",
         model: "Modèle",
-        maxTokens: "Tokens maximum",
+        maxTokens: "Tokens Max",
         temperature: "Température",
         messages: "Messages",
-        export: "Exporter",
         import: "Importer",
-        addMessage: "Ajouter un message",
+        export: "Exporter",
+        addMessage: "Ajouter un Message",
+        role: "Rôle",
+        content: "Contenu",
         send: "Envoyer",
-        processing: "Traitement...",
         response: "Réponse",
         copy: "Copier",
-        apiToken: "Jeton API",
+        processing: "Traitement...",
         error: "Erreur",
         success: "Succès",
-        clearHistory: "Effacer l'historique",
-        systemMessage: "Message système",
-        userMessage: "Message utilisateur",
-        assistantMessage: "Message assistant",
-        date: "Date",
-        noHistory: "Pas d'historique",
-        remove: "Supprimer",
-        confirmation: "Confirmation",
-        confirmClearHistory: "Êtes-vous sûr de vouloir effacer tout l'historique ?",
-        cancel: "Annuler",
-        confirm: "Confirmer",
-        tutorialTitle: "Comment obtenir votre jeton API",
+        history: "Historique",
+        editor: "Éditeur",
+        clear: "Effacer",
+        tutorialTitle: "Comment obtenir une clé OpenAI?",
+        tutorialStep1: "Connectez-vous à votre profil OpenAI ou enregistrez un nouveau compte",
+        tutorialStep1Link: "ici",
+        tutorialStep2: "Après vous être connecté, naviguez vers la section \"API Keys\"",
+        tutorialStep2Link: "via ce lien",
+        tutorialStep3: "Sur la page des clés API, vous trouverez le bouton \"Create new secret key\". Cliquez dessus et suivez les instructions pour générer une nouvelle clé.",
+        tutorialStep4: "OpenAI pourrait vous offrir un crédit initial pour vous permettre d'effectuer vos premiers tests. Une fois votre crédit épuisé, vous devrez ajouter des fonds à votre compte en visitant la",
+        tutorialStep4Link: "section facturation",
+        tutorialStep5: "C'est fait! Collez votre clé secrète ici et vous activerez l'Assistant IA. N'oubliez pas de toujours garder votre clé dans un endroit sûr",
+        tutorialStep5Tool: "l'outil de surveillance",
+        languageSelector: "Langue",
         openaiApiTutorial: "Tutoriel API OpenAI",
         openaiApiTutorialText: "Pour utiliser cet outil, vous aurez besoin d'une clé API OpenAI. Suivez le lien ci-dessous pour en obtenir une.",
         openaiApiTutorialSubtitle: "Comment obtenir et utiliser votre clé API",
         getApiKey: "Obtenez votre clé API",
-        format: "Formater",
-        tokenEstimation: "Estimation des tokens",
-        promptTokensEstimated: "Tokens de prompt (estimé)",
-        completionTokensEstimated: "Tokens de complétion (estimé)",
-        totalTokensEstimated: "Tokens totaux (estimé)",
-        tutorialStep1: "Créez un compte OpenAI",
-        tutorialStep1Link: "S'inscrire",
-        tutorialStep2: "Accédez à la page des clés API",
-        tutorialStep2Link: "Clés API",
-        tutorialStep3: "Créez une nouvelle clé API et copiez-la",
-        tutorialStep4: "Assurez-vous d'avoir configuré un moyen de paiement",
-        tutorialStep4Link: "Configuration de paiement",
-        tutorialStep5: "Collez votre clé API dans le champ 'Jeton API' ci-dessus et commencez à utiliser l'application"
+        format: "Formater"
     },
     es: {
         appTitle: "Comprobador de Prompt para OpenAI",
-        editor: "Editor",
-        history: "Historial",
+        apiToken: "Token API de OpenAI",
         configuration: "Configuración",
         model: "Modelo",
-        maxTokens: "Tokens máximos",
+        maxTokens: "Tokens Máximos",
         temperature: "Temperatura",
         messages: "Mensajes",
-        export: "Exportar",
         import: "Importar",
-        addMessage: "Añadir mensaje",
+        export: "Exportar",
+        addMessage: "Añadir Mensaje",
+        role: "Rol",
+        content: "Contenido",
         send: "Enviar",
-        processing: "Procesando...",
         response: "Respuesta",
         copy: "Copiar",
-        apiToken: "Token API",
+        processing: "Procesando...",
         error: "Error",
         success: "Éxito",
-        clearHistory: "Borrar historial",
-        systemMessage: "Mensaje del sistema",
-        userMessage: "Mensaje del usuario",
-        assistantMessage: "Mensaje del asistente",
-        date: "Fecha",
-        noHistory: "Sin historial",
-        remove: "Eliminar",
-        confirmation: "Confirmación",
-        confirmClearHistory: "¿Estás seguro de que quieres borrar todo el historial?",
-        cancel: "Cancelar",
-        confirm: "Confirmar",
-        tutorialTitle: "Cómo obtener su token API",
+        history: "Historial",
+        editor: "Editor",
+        clear: "Limpiar",
+        tutorialTitle: "¿Cómo obtengo una clave de OpenAI?",
+        tutorialStep1: "Inicia sesión en tu perfil de OpenAI o registra una nueva cuenta",
+        tutorialStep1Link: "aquí",
+        tutorialStep2: "Después de iniciar sesión, navega a la sección \"API Keys\"",
+        tutorialStep2Link: "a través de este enlace",
+        tutorialStep3: "En la página de claves API, encontrarás el botón \"Create new secret key\". Haz clic y sigue las instrucciones para generar una nueva clave.",
+        tutorialStep4: "OpenAI podría ofrecerte un crédito inicial para darte la posibilidad de realizar tus primeras pruebas. Una vez que tu crédito se agote, necesitarás añadir más fondos a tu cuenta visitando la",
+        tutorialStep4Link: "sección de facturación",
+        tutorialStep5: "¡Listo! Pega tu clave secreta aquí y activarás el Asistente IA. Recuerda siempre mantener tu clave en un lugar seguro",
+        tutorialStep5Tool: "la herramienta de monitoreo",
+        languageSelector: "Idioma",
         openaiApiTutorial: "Tutorial de API OpenAI",
         openaiApiTutorialText: "Para usar esta herramienta, necesitarás una clave API de OpenAI. Sigue el enlace de abajo para obtener una.",
         openaiApiTutorialSubtitle: "Cómo obtener y usar tu clave API",
         getApiKey: "Obtén tu clave API",
-        format: "Formatear",
-        tokenEstimation: "Estimación de tokens",
-        promptTokensEstimated: "Tokens de prompt (estimado)",
-        completionTokensEstimated: "Tokens de finalización (estimado)",
-        totalTokensEstimated: "Tokens totales (estimado)",
-        tutorialStep1: "Crea una cuenta de OpenAI",
-        tutorialStep1Link: "Regístrate",
-        tutorialStep2: "Ve a la página de claves API",
-        tutorialStep2Link: "Claves API",
-        tutorialStep3: "Crea una nueva clave API y cópiala",
-        tutorialStep4: "Asegúrate de tener configurado un método de pago",
-        tutorialStep4Link: "Configuración de pago",
-        tutorialStep5: "Pega tu clave API en el campo 'Token API' arriba y comienza a usar la aplicación"
+        format: "Formatear"
     },
     de: {
         appTitle: "OpenAI Prompt-Tester",
-        editor: "Editor",
-        history: "Verlauf",
+        apiToken: "OpenAI API-Token",
         configuration: "Konfiguration",
         model: "Modell",
-        maxTokens: "Maximale Tokens",
+        maxTokens: "Max Tokens",
         temperature: "Temperatur",
         messages: "Nachrichten",
-        export: "Exportieren",
         import: "Importieren",
+        export: "Exportieren",
         addMessage: "Nachricht hinzufügen",
+        role: "Rolle",
+        content: "Inhalt",
         send: "Senden",
-        processing: "Verarbeitung...",
         response: "Antwort",
         copy: "Kopieren",
-        apiToken: "API-Token",
+        processing: "Verarbeitung...",
         error: "Fehler",
         success: "Erfolg",
-        clearHistory: "Verlauf löschen",
-        systemMessage: "System-Nachricht",
-        userMessage: "Benutzer-Nachricht",
-        assistantMessage: "Assistenten-Nachricht",
-        date: "Datum",
-        noHistory: "Kein Verlauf",
-        remove: "Entfernen",
-        confirmation: "Bestätigung",
-        confirmClearHistory: "Sind Sie sicher, dass Sie den gesamten Verlauf löschen möchten?",
-        cancel: "Abbrechen",
-        confirm: "Bestätigen",
-        tutorialTitle: "Wie Sie Ihren API-Token erhalten",
+        history: "Verlauf",
+        editor: "Editor",
+        clear: "Löschen",
+        tutorialTitle: "Wie erhalte ich einen OpenAI-Schlüssel?",
+        tutorialStep1: "Melden Sie sich bei Ihrem OpenAI-Profil an oder registrieren Sie ein neues Konto",
+        tutorialStep1Link: "hier",
+        tutorialStep2: "Nach der Anmeldung navigieren Sie zum Bereich \"API Keys\"",
+        tutorialStep2Link: "über diesen Link",
+        tutorialStep3: "Auf der Seite der API-Schlüssel finden Sie die Schaltfläche \"Create new secret key\". Klicken Sie darauf und folgen Sie den Anweisungen, um einen neuen Schlüssel zu generieren.",
+        tutorialStep4: "OpenAI könnte Ihnen ein Startguthaben anbieten, um Ihnen die Möglichkeit zu geben, Ihre ersten Tests durchzuführen. Sobald Ihr Guthaben aufgebraucht ist, müssen Sie Ihrem Konto weitere Mittel hinzufügen, indem Sie den",
+        tutorialStep4Link: "Abrechnungsbereich",
+        tutorialStep5: "Wir sind fertig! Fügen Sie Ihren geheimen Schlüssel hier ein und Sie aktivieren den KI-Assistenten. Denken Sie daran, Ihren Schlüssel immer an einem sicheren Ort aufzubewahren",
+        tutorialStep5Tool: "das Überwachungstool",
+        languageSelector: "Sprache",
         openaiApiTutorial: "OpenAI API Tutorial",
         openaiApiTutorialText: "Um dieses Tool zu verwenden, benötigen Sie einen OpenAI API-Schlüssel. Folgen Sie dem Link unten, um einen zu erhalten.",
         openaiApiTutorialSubtitle: "Wie Sie Ihren API-Schlüssel erhalten und verwenden",
         getApiKey: "Holen Sie sich Ihren API-Schlüssel",
-        format: "Formatieren",
-        tokenEstimation: "Token-Schätzung",
-        promptTokensEstimated: "Prompt-Tokens (geschätzt)",
-        completionTokensEstimated: "Completion-Tokens (geschätzt)",
-        totalTokensEstimated: "Gesamt-Tokens (geschätzt)",
-        tutorialStep1: "Erstellen Sie ein OpenAI-Konto",
-        tutorialStep1Link: "Registrieren",
-        tutorialStep2: "Gehen Sie zur API-Schlüsselseite",
-        tutorialStep2Link: "API-Schlüssel",
-        tutorialStep3: "Erstellen Sie einen neuen API-Schlüssel und kopieren Sie ihn",
-        tutorialStep4: "Stellen Sie sicher, dass eine Zahlungsmethode eingerichtet ist",
-        tutorialStep4Link: "Zahlungskonfiguration",
-        tutorialStep5: "Fügen Sie Ihren API-Schlüssel in das 'API-Token'-Feld oben ein und beginnen Sie mit der Nutzung der App"
+        format: "Formatieren"
     }
 };
 

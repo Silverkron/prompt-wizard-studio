@@ -17,6 +17,7 @@ import {
     addToHistory, getPromptHistory,
     saveCurrentMessages, getCurrentMessages
 } from "@/lib/storage";
+import { estimateTokensForConversation } from "@/lib/tokenCounter";
 import {MessageRow} from "@/components/MessageRow";
 import {HistoryList} from "@/components/HistoryList";
 import {Copy, Plus, Send, FileText, ChevronDown} from "lucide-react";
@@ -49,6 +50,17 @@ export const PromptTester: React.FC = () => {
     const [isConfigOpen, setIsConfigOpen] = useState(false);
     const [isTutorialOpen, setIsTutorialOpen] = useState(false);
     const [tokenUsage, setTokenUsage] = useState<TokenUsage | null>(null);
+    
+    // Add estimated tokens state
+    const [estimatedTokens, setEstimatedTokens] = useState<{
+        promptTokens: number;
+        estimatedResponseTokens: number;
+        totalTokens: number;
+    }>({
+        promptTokens: 0,
+        estimatedResponseTokens: 0,
+        totalTokens: 0
+    });
 
     useEffect(() => {
         setApiToken(getOpenAIToken());
@@ -79,6 +91,14 @@ export const PromptTester: React.FC = () => {
     useEffect(() => {
         saveCurrentMessages(messages);
     }, [messages]);
+
+    // Add a new useEffect to update token estimation when messages or model changes
+    useEffect(() => {
+        if (messages.length > 0 && model) {
+            const tokens = estimateTokensForConversation(messages, model);
+            setEstimatedTokens(tokens);
+        }
+    }, [messages, model]);
 
     const addMessage = () => {
         setMessages([...messages, {role: "user", content: ""}]);
@@ -258,7 +278,6 @@ export const PromptTester: React.FC = () => {
     };
 
     const formatResponseText = () => {
-        // Format the response by replacing escaped characters with actual characters
         const formattedResponse = response
             .replace(/\\n/g, '\n')
             .replace(/\\t/g, '\t')
@@ -485,7 +504,25 @@ export const PromptTester: React.FC = () => {
                                 {getTranslation(language, "addMessage")}
                             </Button>
                         </CardContent>
-                        <CardFooter>
+                        <CardFooter className="flex flex-col gap-4">
+                            {/* Add token estimation display */}
+                            <div className="w-full px-4 py-3 bg-slate-100 rounded-md">
+                                <div className="flex flex-wrap gap-4 text-sm">
+                                    <div className="flex items-center gap-1">
+                                        <span className="font-semibold">Prompt tokens (stimato):</span>
+                                        <span>{estimatedTokens.promptTokens}</span>
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                        <span className="font-semibold">Completion tokens (stimato):</span>
+                                        <span>{estimatedTokens.estimatedResponseTokens}</span>
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                        <span className="font-semibold">Total tokens (stimato):</span>
+                                        <span>{estimatedTokens.totalTokens}</span>
+                                    </div>
+                                </div>
+                            </div>
+
                             <Button
                                 onClick={handleSubmit}
                                 disabled={loading}

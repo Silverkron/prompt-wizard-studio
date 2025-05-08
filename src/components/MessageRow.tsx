@@ -5,7 +5,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/c
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
 import {Message, MessageRole, Content, ImageMessageContent, MessageContent} from "@/types/openai";
-import {Trash, Image as ImageIcon} from "lucide-react";
+import {Trash, Image as ImageIcon, FileText} from "lucide-react";
 import {Switch} from "@/components/ui/switch";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
@@ -94,20 +94,46 @@ export const MessageRow: React.FC<MessageRowProps> = ({
         onChange({...message, content: newContent});
     }
 
+    const handleFormatContent = () => {
+        // Format the content by replacing escaped characters with actual characters
+        const formattedContent = textContent
+            .replace(/\\n/g, '\n')
+            .replace(/\\t/g, '\t')
+            .replace(/\\r/g, '\r')
+            .replace(/\\"/g, '"')
+            .replace(/\\'/g, "'")
+            .replace(/\\\\/g, '\\');
+            
+        setTextContent(formattedContent);
+        updateMessageContent(formattedContent, imageUrl, includeImage && message.role === "user");
+    };
+
     return (
         <Card className="p-4">
             <div className="space-y-4">
                 <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} gap-4 items-start`}>
-                    <Select value={message.role} onValueChange={handleRoleChange}>
-                        <SelectTrigger className={isMobile ? "w-full" : "w-32"}>
-                            <SelectValue placeholder="Select role"/>
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="system">system</SelectItem>
-                            <SelectItem value="user">user</SelectItem>
-                            <SelectItem value="assistant">assistant</SelectItem>
-                        </SelectContent>
-                    </Select>
+                    <div className="flex flex-col gap-2">
+                        <Select value={message.role} onValueChange={handleRoleChange}>
+                            <SelectTrigger className={isMobile ? "w-full" : "w-32"}>
+                                <SelectValue placeholder="Select role"/>
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="system">system</SelectItem>
+                                <SelectItem value="user">user</SelectItem>
+                                <SelectItem value="assistant">assistant</SelectItem>
+                            </SelectContent>
+                        </Select>
+                        
+                        <Button 
+                            variant="outline" 
+                            size="sm" 
+                            onClick={handleFormatContent}
+                            className="flex items-center gap-1"
+                        >
+                            <FileText className="h-4 w-4" />
+                            Format
+                        </Button>
+                    </div>
 
                     <div className="flex-1 w-full">
                         <Textarea

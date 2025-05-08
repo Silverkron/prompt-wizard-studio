@@ -19,7 +19,7 @@ import {
 } from "@/lib/storage";
 import {MessageRow} from "@/components/MessageRow";
 import {HistoryList} from "@/components/HistoryList";
-import {Copy, Plus, Send, Settings, ExternalLink, ChevronDown} from "lucide-react";
+import {Copy, Plus, Send, FileText, ChevronDown} from "lucide-react";
 import {OpenAITutorial} from "@/components/OpenAITutorial";
 import LanguageSelector from "@/components/LanguageSelector";
 import {useLanguage} from "@/contexts/LanguageContext";
@@ -251,6 +251,19 @@ export const PromptTester: React.FC = () => {
         }
     };
 
+    const formatResponseText = () => {
+        // Format the response by replacing escaped characters with actual characters
+        const formattedResponse = response
+            .replace(/\\n/g, '\n')
+            .replace(/\\t/g, '\t')
+            .replace(/\\r/g, '\r')
+            .replace(/\\"/g, '"')
+            .replace(/\\'/g, "'")
+            .replace(/\\\\/g, '\\');
+            
+        setResponse(formattedResponse);
+    };
+
     const MobileConfigurationCollapsible = () => (
         <Collapsible
             open={isConfigOpen}
@@ -324,7 +337,7 @@ export const PromptTester: React.FC = () => {
 
     const TutorialCollapsible = () => (
         <Collapsible
-            open={isTutorialOpen}
+            open={false}
             onOpenChange={setIsTutorialOpen}
             className="w-full mb-6 border rounded-lg bg-white shadow-sm"
         >
@@ -493,14 +506,25 @@ export const PromptTester: React.FC = () => {
                             <CardHeader>
                                 <CardTitle className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                                     <span>{getTranslation(language, "response")}</span>
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        onClick={() => navigator.clipboard.writeText(response)}
-                                    >
-                                        <Copy className="h-4 w-4 mr-2"/>
-                                        {getTranslation(language, "copy")}
-                                    </Button>
+                                    <div className="flex gap-2">
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            onClick={formatResponseText}
+                                            className="flex items-center gap-1"
+                                        >
+                                            <FileText className="h-4 w-4" />
+                                            {getTranslation(language, "format")}
+                                        </Button>
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            onClick={() => navigator.clipboard.writeText(response)}
+                                        >
+                                            <Copy className="h-4 w-4 mr-2"/>
+                                            {getTranslation(language, "copy")}
+                                        </Button>
+                                    </div>
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>

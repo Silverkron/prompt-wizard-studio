@@ -7,7 +7,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/c
 import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import {useToast} from "@/components/ui/use-toast";
-import {HistoryItem, Message, PromptConfig} from "@/types/openai";
+import {HistoryItem, Message, PromptConfig, TokenUsage} from "@/types/openai";
 import {sendPromptToOpenAI} from "@/services/openai";
 import {
     getOpenAIToken, saveOpenAIToken,
@@ -48,6 +48,7 @@ export const PromptTester: React.FC = () => {
     const isMobile = useIsMobile();
     const [isConfigOpen, setIsConfigOpen] = useState(false);
     const [isTutorialOpen, setIsTutorialOpen] = useState(false);
+    const [tokenUsage, setTokenUsage] = useState<TokenUsage | null>(null);
 
     useEffect(() => {
         setApiToken(getOpenAIToken());
@@ -124,6 +125,7 @@ export const PromptTester: React.FC = () => {
 
         setLoading(true);
         setResponse("");
+        setTokenUsage(null);
 
         const promptConfig: PromptConfig = {
             model,
@@ -138,6 +140,7 @@ export const PromptTester: React.FC = () => {
 
             const responseText = result.choices[0]?.message?.content || "Nessuna risposta";
             setResponse(responseText);
+            setTokenUsage(result.usage);
 
             const historyItem: HistoryItem = {
                 id: Date.now().toString(),
@@ -158,6 +161,7 @@ export const PromptTester: React.FC = () => {
 
             const errorMessage = error instanceof Error ? error.message : "Errore sconosciuto";
             setResponse(`Errore: ${errorMessage}`);
+            setTokenUsage(null);
 
             const historyItem: HistoryItem = {
                 id: Date.now().toString(),
@@ -246,8 +250,10 @@ export const PromptTester: React.FC = () => {
 
         if (item.response) {
             setResponse(item.response.choices[0]?.message?.content || "");
+            setTokenUsage(item.response.usage);
         } else if (item.error) {
             setResponse(`Errore: ${item.error}`);
+            setTokenUsage(null);
         }
     };
 
@@ -514,7 +520,7 @@ export const PromptTester: React.FC = () => {
                                             className="flex items-center gap-1"
                                         >
                                             <FileText className="h-4 w-4" />
-                                            {getTranslation(language, "format")}
+                                            {getTranslation(language, "format") || "Format"}
                                         </Button>
                                         <Button
                                             variant="outline"
@@ -527,6 +533,24 @@ export const PromptTester: React.FC = () => {
                                     </div>
                                 </CardTitle>
                             </CardHeader>
+                            {tokenUsage && (
+                                <div className="px-6 py-2 bg-slate-100 border-b border-slate-200">
+                                    <div className="flex flex-wrap gap-4 text-sm">
+                                        <div className="flex items-center gap-1">
+                                            <span className="font-semibold">Prompt tokens:</span>
+                                            <span>{tokenUsage.prompt_tokens}</span>
+                                        </div>
+                                        <div className="flex items-center gap-1">
+                                            <span className="font-semibold">Completion tokens:</span>
+                                            <span>{tokenUsage.completion_tokens}</span>
+                                        </div>
+                                        <div className="flex items-center gap-1">
+                                            <span className="font-semibold">Total tokens:</span>
+                                            <span>{tokenUsage.total_tokens}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                             <CardContent>
                                 <div className="bg-gray-50 p-4 rounded-md whitespace-pre-wrap font-mono text-sm overflow-x-auto">
                                     {response}

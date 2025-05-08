@@ -28,6 +28,12 @@ export interface PromptConfig {
   temperature: number;
 }
 
+export interface TokenUsage {
+  prompt_tokens: number;
+  completion_tokens: number;
+  total_tokens: number;
+}
+
 export interface OpenAIResponse {
   id: string;
   object: string;
@@ -41,11 +47,7 @@ export interface OpenAIResponse {
     };
     finish_reason: string;
   }[];
-  usage: {
-    prompt_tokens: number;
-    completion_tokens: number;
-    total_tokens: number;
-  };
+  usage: TokenUsage;
 }
 
 export interface HistoryItem {

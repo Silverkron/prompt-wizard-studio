@@ -36,7 +36,8 @@ export type TranslationKey =
     | "openaiApiTutorial"
     | "openaiApiTutorialText"
     | "openaiApiTutorialSubtitle"
-    | "getApiKey";
+    | "getApiKey"
+    | "format";
 
 export const translations: Record<Language, Record<TranslationKey, string>> = {
     it: {
@@ -75,7 +76,8 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         openaiApiTutorial: "Tutorial API OpenAI",
         openaiApiTutorialText: "Per utilizzare questo strumento, avrai bisogno di una chiave API OpenAI. Segui il link qui sotto per ottenerla.",
         openaiApiTutorialSubtitle: "Come ottenere e utilizzare la tua chiave API",
-        getApiKey: "Ottieni la tua chiave API"
+        getApiKey: "Ottieni la tua chiave API",
+        format: "Formatta"
     },
     en: {
         appTitle: "OpenAI Prompt Tester",
@@ -113,7 +115,8 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         openaiApiTutorial: "OpenAI API Tutorial",
         openaiApiTutorialText: "To use this tool, you'll need an OpenAI API key. Follow the link below to get one.",
         openaiApiTutorialSubtitle: "How to get and use your API key",
-        getApiKey: "Get your API key"
+        getApiKey: "Get your API key",
+        format: "Format"
     },
     fr: {
         appTitle: "Testeur de Prompt pour OpenAI",
@@ -151,7 +154,8 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         openaiApiTutorial: "Tutoriel API OpenAI",
         openaiApiTutorialText: "Pour utiliser cet outil, vous aurez besoin d'une clé API OpenAI. Suivez le lien ci-dessous pour en obtenir une.",
         openaiApiTutorialSubtitle: "Comment obtenir et utiliser votre clé API",
-        getApiKey: "Obtenez votre clé API"
+        getApiKey: "Obtenez votre clé API",
+        format: "Formater"
     },
     es: {
         appTitle: "Comprobador de Prompt para OpenAI",
@@ -189,7 +193,8 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         openaiApiTutorial: "Tutorial de API OpenAI",
         openaiApiTutorialText: "Para usar esta herramienta, necesitarás una clave API de OpenAI. Sigue el enlace de abajo para obtener una.",
         openaiApiTutorialSubtitle: "Cómo obtener y usar tu clave API",
-        getApiKey: "Obtén tu clave API"
+        getApiKey: "Obtén tu clave API",
+        format: "Formatear"
     },
     de: {
         appTitle: "OpenAI Prompt-Tester",
@@ -227,7 +232,8 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         openaiApiTutorial: "OpenAI API Tutorial",
         openaiApiTutorialText: "Um dieses Tool zu verwenden, benötigen Sie einen OpenAI API-Schlüssel. Folgen Sie dem Link unten, um einen zu erhalten.",
         openaiApiTutorialSubtitle: "Wie Sie Ihren API-Schlüssel erhalten und verwenden",
-        getApiKey: "Holen Sie sich Ihren API-Schlüssel"
+        getApiKey: "Holen Sie sich Ihren API-Schlüssel",
+        format: "Formatieren"
     }
 };
 

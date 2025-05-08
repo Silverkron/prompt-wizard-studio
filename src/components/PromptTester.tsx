@@ -1,4 +1,3 @@
-
 import React, {useState, useEffect} from "react";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
@@ -551,10 +550,16 @@ export const PromptTester: React.FC = () => {
                                             <span>{tokenUsage.total_tokens}</span>
                                         </div>
                                         {tokenUsage && (
-                                            <div className="flex items-center gap-1">
-                                                <span className="font-semibold">{getTranslation(language, "estimatedCost")}</span>
-                                                <span>{formatCost(calculateTokenCost(model, tokenUsage.prompt_tokens, tokenUsage.completion_tokens))}</span>
-                                            </div>
+                                            <>
+                                                <div className="flex items-center gap-1">
+                                                    <span className="font-semibold">{getTranslation(language, "estimatedCost")}</span>
+                                                    <span>{formatCost(calculateTokenCost(model, tokenUsage.prompt_tokens, tokenUsage.completion_tokens))}</span>
+                                                </div>
+                                                <div className="flex items-center gap-1">
+                                                    <span className="font-semibold">{getTranslation(language, "batchEstimatedCost")}</span>
+                                                    <span>{formatCost(calculateTokenCost(model, tokenUsage.prompt_tokens, tokenUsage.completion_tokens) / 2)}</span>
+                                                </div>
+                                            </>
                                         )}
                                     </div>
                                 </div>

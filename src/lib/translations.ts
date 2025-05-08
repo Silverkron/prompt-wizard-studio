@@ -1,4 +1,3 @@
-
 export type Language = "it" | "en" | "fr" | "es" | "de";
 
 export type TranslationKey =
@@ -42,7 +41,8 @@ export type TranslationKey =
     | "promptTokens"
     | "completionTokens"
     | "totalTokens"
-    | "estimatedCost";
+    | "estimatedCost"
+    | "batchEstimatedCost";
 
 export const translations: Record<Language, Record<TranslationKey, string>> = {
     it: {
@@ -86,7 +86,8 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         promptTokens: "Token del prompt:",
         completionTokens: "Token della risposta:",
         totalTokens: "Token totali:",
-        estimatedCost: "Costo stimato:"
+        estimatedCost: "Costo stimato:",
+        batchEstimatedCost: "Costo stimato batch:"
     },
     en: {
         appTitle: "OpenAI Prompt Tester",
@@ -129,7 +130,8 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         promptTokens: "Prompt tokens:",
         completionTokens: "Completion tokens:",
         totalTokens: "Total tokens:",
-        estimatedCost: "Estimated cost:"
+        estimatedCost: "Estimated cost:",
+        batchEstimatedCost: "Batch estimated cost:"
     },
     fr: {
         appTitle: "Testeur de Prompt pour OpenAI",
@@ -172,7 +174,8 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         promptTokens: "Tokens de l'invite:",
         completionTokens: "Tokens de réponse:",
         totalTokens: "Tokens totaux:",
-        estimatedCost: "Coût estimé:"
+        estimatedCost: "Coût estimé:",
+        batchEstimatedCost: "Coût estimé par lot:"
     },
     es: {
         appTitle: "Comprobador de Prompt para OpenAI",
@@ -215,7 +218,8 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         promptTokens: "Tokens de entrada:",
         completionTokens: "Tokens de respuesta:",
         totalTokens: "Tokens totales:",
-        estimatedCost: "Coste estimado:"
+        estimatedCost: "Coste estimado:",
+        batchEstimatedCost: "Coste estimado por lote:"
     },
     de: {
         appTitle: "OpenAI Prompt-Tester",
@@ -258,7 +262,8 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
         promptTokens: "Prompt-Tokens:",
         completionTokens: "Antwort-Tokens:",
         totalTokens: "Gesamttokens:",
-        estimatedCost: "Geschätzte Kosten:"
+        estimatedCost: "Geschätzte Kosten:",
+        batchEstimatedCost: "Geschätzte Chargenkosten:"
     }
 };
 

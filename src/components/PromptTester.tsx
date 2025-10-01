@@ -304,6 +304,7 @@ export const PromptTester: React.FC = () => {
                             <SelectValue placeholder={getTranslation(language, "model")}/>
                         </SelectTrigger>
                         <SelectContent>
+                            <SelectItem value="gpt-5">gpt-5</SelectItem>
                             <SelectItem value="gpt-4o-mini">gpt-4o-mini</SelectItem>
                             <SelectItem value="gpt-4o">gpt-4o</SelectItem>
                             <SelectItem value="gpt-4.5-preview">gpt-4.5-preview</SelectItem>
@@ -416,6 +417,7 @@ export const PromptTester: React.FC = () => {
                                                 <SelectValue placeholder={getTranslation(language, "model")}/>
                                             </SelectTrigger>
                                             <SelectContent>
+                                                <SelectItem value="gpt-5">gpt-5</SelectItem>
                                                 <SelectItem value="gpt-4o-mini">gpt-4o-mini</SelectItem>
                                                 <SelectItem value="gpt-4o">gpt-4o</SelectItem>
                                                 <SelectItem value="gpt-4.5-preview">gpt-4.5-preview</SelectItem>

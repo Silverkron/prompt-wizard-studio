@@ -26,6 +26,10 @@ export interface PromptConfig {
   messages: Message[];
   max_tokens: number;
   temperature: number;
+  reasoning?: {
+    effort: "low" | "medium" | "high" | "minimal";
+  };
+  verbosity?: "low" | "medium" | "high";
 }
 
 export interface TokenUsage {

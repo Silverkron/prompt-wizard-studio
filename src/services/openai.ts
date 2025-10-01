@@ -31,11 +31,20 @@ export const sendPromptToOpenAI = async (config: PromptConfig): Promise<OpenAIRe
 
     requestBody = {
       model: config.model,
+      engine: config.engine,
       instructions: instructions || undefined,
       input: userMessages,
       max_output_tokens: config.max_tokens,
       temperature: config.temperature,
     };
+
+    // Add optional GPT-5 parameters
+    if (config.reasoning) {
+      requestBody.reasoning = config.reasoning;
+    }
+    if (config.verbosity) {
+      requestBody.verbosity = config.verbosity;
+    }
   } else {
     // Legacy models use the Chat Completions API
     requestBody = {

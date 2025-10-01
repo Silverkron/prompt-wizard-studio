@@ -50,6 +50,8 @@ export const PromptTester: React.FC = () => {
     const [isConfigOpen, setIsConfigOpen] = useState(false);
     const [isTutorialOpen, setIsTutorialOpen] = useState(false);
     const [tokenUsage, setTokenUsage] = useState<TokenUsage | null>(null);
+    const [reasoningEffort, setReasoningEffort] = useState<"low" | "medium" | "high" | "minimal">("low");
+    const [verbosity, setVerbosity] = useState<"low" | "medium" | "high">("low");
 
     useEffect(() => {
         setApiToken(getOpenAIToken());
@@ -136,6 +138,12 @@ export const PromptTester: React.FC = () => {
             temperature,
         };
 
+        // Add GPT-5 specific parameters
+        if (model.startsWith('gpt-5')) {
+            promptConfig.reasoning = { effort: reasoningEffort };
+            promptConfig.verbosity = verbosity;
+        }
+
         try {
             const result = await sendPromptToOpenAI(promptConfig);
 
@@ -192,6 +200,12 @@ export const PromptTester: React.FC = () => {
             max_tokens: maxTokens,
             temperature,
         };
+
+        // Add GPT-5 specific parameters
+        if (model.startsWith('gpt-5')) {
+            promptConfig.reasoning = { effort: reasoningEffort };
+            promptConfig.verbosity = verbosity;
+        }
 
         const jsonString = JSON.stringify(promptConfig, null, 2);
 
@@ -253,8 +267,13 @@ export const PromptTester: React.FC = () => {
                 setMaxTokens(config.max_output_tokens || 800);
                 setTemperature(config.temperature !== undefined ? config.temperature : 0.7);
 
-                // Store reasoning and verbosity if present (they will be used in the API call)
-                // Note: We need to update the PromptConfig state to include these
+                // Store reasoning and verbosity if present
+                if (config.reasoning?.effort) {
+                    setReasoningEffort(config.reasoning.effort);
+                }
+                if (config.verbosity) {
+                    setVerbosity(config.verbosity);
+                }
             } else {
                 // Legacy format
                 if (!Array.isArray(config.messages)) {
@@ -377,6 +396,39 @@ export const PromptTester: React.FC = () => {
                         onValueChange={(value) => setTemperature(value[0])}
                     />
                 </div>
+
+                {model.startsWith('gpt-5') && (
+                    <>
+                        <div className="space-y-2">
+                            <Label htmlFor="mobile-reasoning">{getTranslation(language, "reasoningEffort")}</Label>
+                            <Select value={reasoningEffort} onValueChange={(value: any) => setReasoningEffort(value)}>
+                                <SelectTrigger id="mobile-reasoning">
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="minimal">Minimal</SelectItem>
+                                    <SelectItem value="low">Low</SelectItem>
+                                    <SelectItem value="medium">Medium</SelectItem>
+                                    <SelectItem value="high">High</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+
+                        <div className="space-y-2">
+                            <Label htmlFor="mobile-verbosity">{getTranslation(language, "verbosity")}</Label>
+                            <Select value={verbosity} onValueChange={(value: any) => setVerbosity(value)}>
+                                <SelectTrigger id="mobile-verbosity">
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="low">Low</SelectItem>
+                                    <SelectItem value="medium">Medium</SelectItem>
+                                    <SelectItem value="high">High</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </>
+                )}
             </CollapsibleContent>
         </Collapsible>
     );
@@ -491,6 +543,39 @@ export const PromptTester: React.FC = () => {
                                         />
                                     </div>
                                 </div>
+
+                                {model.startsWith('gpt-5') && (
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                                        <div className="space-y-2">
+                                            <Label htmlFor="reasoning-effort">{getTranslation(language, "reasoningEffort")}</Label>
+                                            <Select value={reasoningEffort} onValueChange={(value: any) => setReasoningEffort(value)}>
+                                                <SelectTrigger id="reasoning-effort">
+                                                    <SelectValue />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectItem value="minimal">Minimal</SelectItem>
+                                                    <SelectItem value="low">Low</SelectItem>
+                                                    <SelectItem value="medium">Medium</SelectItem>
+                                                    <SelectItem value="high">High</SelectItem>
+                                                </SelectContent>
+                                            </Select>
+                                        </div>
+
+                                        <div className="space-y-2">
+                                            <Label htmlFor="verbosity">{getTranslation(language, "verbosity")}</Label>
+                                            <Select value={verbosity} onValueChange={(value: any) => setVerbosity(value)}>
+                                                <SelectTrigger id="verbosity">
+                                                    <SelectValue />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectItem value="low">Low</SelectItem>
+                                                    <SelectItem value="medium">Medium</SelectItem>
+                                                    <SelectItem value="high">High</SelectItem>
+                                                </SelectContent>
+                                            </Select>
+                                        </div>
+                                    </div>
+                                )}
                             </CardContent>
                         </Card>
                     )}

@@ -217,16 +217,54 @@ export const PromptTester: React.FC = () => {
             const input = prompt("Incolla la configurazione JSON qui:");
             if (!input) return;
 
-            const config: PromptConfig = JSON.parse(input);
+            const config: any = JSON.parse(input);
 
-            if (!config.model || !Array.isArray(config.messages)) {
-                throw new Error("Formato di configurazione non valido");
+            // Check if it's GPT-5 format (with instructions and input) or legacy format (with messages)
+            const isGPT5Format = config.instructions !== undefined || config.input !== undefined;
+
+            if (!config.model) {
+                throw new Error("Formato di configurazione non valido: manca il campo model");
             }
 
             setModel(config.model);
-            setMaxTokens(config.max_tokens || 800);
-            setTemperature(config.temperature || 0.7);
-            setMessages(config.messages);
+
+            if (isGPT5Format) {
+                // GPT-5 format conversion
+                const convertedMessages: Message[] = [];
+
+                // Convert instructions to system message
+                if (config.instructions) {
+                    convertedMessages.push({
+                        role: "system",
+                        content: config.instructions
+                    });
+                }
+
+                // Add input messages
+                if (Array.isArray(config.input)) {
+                    convertedMessages.push(...config.input);
+                }
+
+                if (convertedMessages.length === 0) {
+                    throw new Error("Formato di configurazione non valido: mancano instructions o input");
+                }
+
+                setMessages(convertedMessages);
+                setMaxTokens(config.max_output_tokens || 800);
+                setTemperature(config.temperature !== undefined ? config.temperature : 0.7);
+
+                // Store reasoning and verbosity if present (they will be used in the API call)
+                // Note: We need to update the PromptConfig state to include these
+            } else {
+                // Legacy format
+                if (!Array.isArray(config.messages)) {
+                    throw new Error("Formato di configurazione non valido: manca il campo messages");
+                }
+
+                setMessages(config.messages);
+                setMaxTokens(config.max_tokens || 800);
+                setTemperature(config.temperature || 0.7);
+            }
 
             toast({
                 title: getTranslation(language, "success"),
@@ -236,7 +274,7 @@ export const PromptTester: React.FC = () => {
             console.error("Error importing config:", error);
             toast({
                 title: getTranslation(language, "error"),
-                description: "Impossibile analizzare la configurazione JSON",
+                description: error instanceof Error ? error.message : "Impossibile analizzare la configurazione JSON",
                 variant: "destructive",
             });
         }
